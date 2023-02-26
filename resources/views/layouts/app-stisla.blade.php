@@ -14,7 +14,7 @@
     <div id="app">
         <div class="main-wrapper">
             @include('partials.stisla.navigation')
-            @include('partials.stisla.header')
+            @include('partials.stisla.sidebar')
             <div class="main-content">
                 @yield('content')
             </div>

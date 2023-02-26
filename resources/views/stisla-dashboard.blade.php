@@ -4,7 +4,7 @@
     <section class="section">
         <div class="section-header">
             <h1>Dashboard</h1>
-            {{ Breadcrumbs::render('dashboard', $dashboard) }}
+            {{ Breadcrumbs::render('dashboard') }}
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12">
@@ -56,6 +56,16 @@
                         <div class="card-body">
                             59
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Budget vs Sales</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="myChart" height="158"></canvas>
                     </div>
                 </div>
             </div>

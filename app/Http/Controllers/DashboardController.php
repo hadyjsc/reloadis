@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Type;
-
-class TypeController extends Controller
+class DashboardController extends Controller
 {
     public function index()
     {
         $dashboard = "Dashboard";
+        return view('stisla-dashboard', compact('dashboard'));
     }
 }

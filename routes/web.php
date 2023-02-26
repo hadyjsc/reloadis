@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TypeController;
 
 /*
@@ -14,12 +15,9 @@ use App\Http\Controllers\TypeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('stisla-dashboard');
+Route::controller(DashboardController::class)->prefix('')->as('.')->group(function(){
+    Route::get("", "index");
+    Route::get("/dashboard","index");
 });
 
 
@@ -27,9 +25,9 @@ Route::controller(TypeController::class)
     ->prefix('types')
     ->as('types.')
     ->group(function() {
-        Route::get("", "index");
-        Route::get("/{id}", "detail");
-        Route::post("", "create");
-        Route::put("/{id}", "update");
-        Route::delete("/{id}", "delete");
+        Route::get("/", "index")->name('index');
+        Route::get("/{id}", "detail")->name('detail');
+        Route::post("/", "create")->name('create');
+        Route::put("/{id}", "update")->name('update');
+        Route::delete("/{id}", "delete")->name('delete');
 });
