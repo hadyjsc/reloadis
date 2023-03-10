@@ -27,10 +27,10 @@ class TypesTable extends AbstractTableConfiguration
     protected function columns(): array
     {
         return [
-            Column::make('id')->sortable(),
-            Column::make('name')->searchable(),
-            Column::make('created_at')->format(new DateFormatter('d/m/Y H:i'))->sortable()->sortByDefault('desc'),
-            Column::make('updated_at')->format(new DateFormatter('d/m/Y H:i'))
+            Column::make('id')->sortable()->title('Id'),
+            Column::make('name')->title('Name')->searchable(),
+            Column::make('created_at')->title('Created At')->format(new DateFormatter('d/m/Y H:i'))->sortable()->sortByDefault('desc'),
+            Column::make('updated_at')->title('Updated At')->format(new DateFormatter('d/m/Y H:i'))
         ];
     }
 

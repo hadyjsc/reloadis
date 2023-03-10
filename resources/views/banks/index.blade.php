@@ -4,7 +4,7 @@
     <section class="section">
         <div class="section-header">
             <h1>Types</h1>
-            {{ Breadcrumbs::render('types') }}
+            {{ Breadcrumbs::render('banks') }}
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -12,13 +12,13 @@
                     <div class="card-header">
                         <h4>Advanced Table</h4>
                         <div class="card-header-form">
-                            
+
                         </div>
                     </div>
                     <div class="card-body p-0">
                         <div class="col-lg-12 col-md-12">
                             <div class="table-responsive">
-                                <livewire:table :config="App\Tables\TypesTable::class"/>
+                                <livewire:table :config="App\Tables\BanksTable::class"/>
                             </div>
                         </div>
                     </div>

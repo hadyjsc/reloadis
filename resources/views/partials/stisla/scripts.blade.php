@@ -19,3 +19,5 @@
 
 <!-- Page Specific JS File -->
 {{-- <script src="{{asset('assets/js/page/index.js')}}"></script> --}}
+
+<livewire:scripts />
