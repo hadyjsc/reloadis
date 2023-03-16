@@ -11,7 +11,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type_id', 'name', 'created_at'];
+    protected $fillable = ['type_id', 'name'];
 
     protected $hidden = ['id', 'type_id', 'name', 'created_at', 'updated_at'];
 

@@ -22,9 +22,14 @@ Breadcrumbs::for('create', function ($bc) {
     $bc->push('Create', route('categories.create'));
 });
 
-Breadcrumbs::for('detail', function ($bc, $model) {
+Breadcrumbs::for('show', function ($bc, $model) {
     $bc->parent('categories');
-    // $bc->push($model->name, route('categories.detail', $model->id));
+    $bc->push($model->name, route('categories.show', $model->id));
+});
+
+Breadcrumbs::for('edit', function ($bc, $model) {
+    $bc->parent('categories');
+    $bc->push($model->name, route('categories.edit', $model->id));
 });
 
 Breadcrumbs::for('sub-categories', function ($breadcrumbs) {

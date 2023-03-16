@@ -10,13 +10,13 @@ class CategoryController extends Controller
 {
     public function index()
     {
-
         $model = Category::orderBy('id', 'desc')->paginate(10);
         return view('categories.index', compact('model'));
     }
 
-    public function detail(Category $model)
+    public function show($id)
     {
+        $model = Category::find($id);
         return view('categories.detail', compact('model'));
     }
 
@@ -29,9 +29,11 @@ class CategoryController extends Controller
         return view('categories.create', compact(['model','type']));
     }
 
-    public function edit(Category $model)
+    public function edit($id)
     {
-        return view('categories.edit', compact('model'));
+        $type = Type::get(['id', 'name']);
+        $model = Category::find($id);
+        return view('categories.edit', compact(['model', 'type']));
     }
 
     public function insert(Request $req)
@@ -46,10 +48,20 @@ class CategoryController extends Controller
         return redirect(route('categories.create'))->with('success', 'Data berhasil disimpan.');
     }
 
-    public function update(Request $req)
+    public function update(Request $request, Category $model)
     {
-        $model = Category::class;
-        return redirect(route('categories.edit', $model->id), compact('model'));
+        $request->validate([
+            'name' => 'required',
+            'type_id' => 'required',
+        ]);
+
+        $model = Category::find($request->id);
+        $model->name = $request->name;
+        $model->type_id = $request->type_id;
+        $model->updated_at = now();
+        $model->save();
+
+        return redirect(route('categories.edit', $request->id))->with('success', 'Data berhasil diubah.');
     }
 
     public function delete(Request $req)

@@ -43,12 +43,12 @@ Route::controller(CategoryController::class)
     ->group(function() {
         // router for load view
         Route::get("/", "index")->name('index');
-        Route::get("/detail/{id}", "detail")->name('detail');
+        Route::get("/{id}/show", "show")->name('show');
         Route::get("/create", "create")->name('create');
-        Route::get("/edit/{id}", "edit")->name('edit');
+        Route::get("/{id}/edit", "edit")->name('edit');
         // router for query
         Route::post("/", "insert")->name('insert');
-        Route::put("/", "update")->name('update');
+        Route::put("/{id}/update", "update")->name('update');
         Route::delete("/", "delete")->name('delete');
 });
 

@@ -24,7 +24,7 @@ class CategoriesTable extends AbstractTableConfiguration
                 new RelationshipFilter('Types', 'type', Type::pluck('name', 'id')->toArray(), false)
             ])
             ->rowActions(fn(Category $categories) => [
-                new ShowRowAction(route('categories.detail', $categories->id)),
+                new ShowRowAction(route('categories.show', $categories->id)),
                 new EditRowAction(route('categories.edit', $categories->id)),
                 new DestroyRowAction(),
             ]);
