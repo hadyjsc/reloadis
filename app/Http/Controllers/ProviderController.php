@@ -14,9 +14,9 @@ class ProviderController extends Controller
         return view('providers.index', compact('model'));
     }
 
-    public function detail($id)
+    public function show($id)
     {
-        $model = Provider::where('id', $id);
+        $model = Provider::find($id);
         return view('providers.detail', compact('model'));
     }
 
@@ -26,15 +26,36 @@ class ProviderController extends Controller
         return view('providers.create', compact('model'));
     }
 
-    public function update($id)
+    public function edit($id)
     {
-        $model = Provider::class;
-        return view('providers.update', compact('model'));
+        $model = Provider::find($id);
+        return view('providers.edit', compact(['model']));
+    }
+
+    public function update(Request $req, Provider $model)
+    {
+        $req->validate(['name' => 'required']);
+
+        $model = Provider::find($req->id);
+        $model->name = $req->name;
+        $model->updated_at = now();
+        $model->save();
+
+        return redirect(route('providers.edit', $req->id))->with('success', 'Data berhasil diubah.');
     }
 
     public function delete($id)
     {
         $model = Provider::class;
         return view('providers.index', compact('model'));
+    }
+
+    public function insert(Request $req)
+    {
+        $req->validate(['name'=>'required']);
+
+        Provider::create($req->post());
+
+        return redirect(route('providers.create'))->with('success', 'Data berhasil disimpan.');
     }
 }

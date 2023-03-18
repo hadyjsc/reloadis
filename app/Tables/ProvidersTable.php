@@ -6,6 +6,7 @@ use App\Models\Provider;
 use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
 use Okipa\LaravelTable\Column;
 use Okipa\LaravelTable\Formatters\DateFormatter;
+use Okipa\LaravelTable\RowActions\ShowRowAction;
 use Okipa\LaravelTable\RowActions\DestroyRowAction;
 use Okipa\LaravelTable\RowActions\EditRowAction;
 use Okipa\LaravelTable\Table;
@@ -16,6 +17,7 @@ class ProvidersTable extends AbstractTableConfiguration
     {
         return Table::make()->model(Provider::class)
             ->rowActions(fn(Provider $providers) => [
+                new ShowRowAction(route('providers.show', $providers->id)),
                 new EditRowAction(route('providers.edit', $providers)),
                 new DestroyRowAction(),
             ]);

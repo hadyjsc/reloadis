@@ -20,6 +20,7 @@ class SubCategoriesTable extends AbstractTableConfiguration
                 new RelationshipFilter('Categories', 'categories', SubCategory::pluck('name', 'id')->toArray(), false)
             ])
             ->rowActions(fn(SubCategory $subCategories) => [
+                new ShowRowAction(route('subCategories.show', $subCategories->id)),
                 new EditRowAction(route('subCategories.edit', $subCategories)),
                 new DestroyRowAction(),
             ]);
