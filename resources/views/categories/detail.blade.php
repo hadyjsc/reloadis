@@ -4,7 +4,7 @@
 <section class="section">
     <div class="section-header">
         <h1>Detail</h1>
-        {{ Breadcrumbs::render('show', $model) }}
+        {{ Breadcrumbs::render('categories.show', $model) }}
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -38,6 +38,7 @@
                         <form method="post" action="{{ route('categories.delete', $model->id) }}">
                             @csrf
                             @method('DELETE')
+                            <a href="{{route('categories.index')}}" class="btn btn-warning"><i class="fa fa-times"></i> Cancel</a>
                             <a href="{{route('categories.edit', $model->id)}}" class="btn btn-primary"><i class="fa fa-edit"></i> Update</a>
                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</button>
                         </form>

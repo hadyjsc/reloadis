@@ -4,7 +4,7 @@
 <section class="section">
     <div class="section-header">
         <h1>Detail</h1>
-        {{ Breadcrumbs::render('edit', $model) }}
+        {{ Breadcrumbs::render('categories.edit', $model) }}
     </div>
     <div class="row">
         <div class="col-lg-12">

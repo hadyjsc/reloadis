@@ -33,19 +33,21 @@ Breadcrumbs::for('categories', function ($breadcrumbs) {
     $breadcrumbs->push('Category', route('categories.index'));
 });
 
-Breadcrumbs::for('create', function ($breadcrumbs) {
+Breadcrumbs::for('categories.create', function ($breadcrumbs) {
     $breadcrumbs->parent('categories');
     $breadcrumbs->push('Create', route('categories.create'));
 });
 
-Breadcrumbs::for('show', function ($breadcrumbs, $model) {
+Breadcrumbs::for('categories.edit', function ($breadcrumbs, $model) {
     $breadcrumbs->parent('categories');
-    $breadcrumbs->push($model->name, route('categories.show', $model->id));
+    $breadcrumbs->push('Edit', route('categories.edit', $model->id));
+    $breadcrumbs->push($model->name, route('categories.edit', $model->id));
 });
 
-Breadcrumbs::for('edit', function ($breadcrumbs, $model) {
+Breadcrumbs::for('categories.show', function ($breadcrumbs, $model) {
     $breadcrumbs->parent('categories');
-    $breadcrumbs->push($model->name, route('categories.edit', $model->id));
+    $breadcrumbs->push('Show', route('categories.show', $model->id));
+    $breadcrumbs->push($model->name, route('categories.show', $model->id));
 });
 
 Breadcrumbs::for('sub-categories', function ($breadcrumbs) {
