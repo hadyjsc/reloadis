@@ -43,3 +43,13 @@ Breadcrumbs::for('banks', function ($breadcrumbs) {
 Breadcrumbs::for('providers', function ($breadcrumbs) {
     $breadcrumbs->push('Providers', route('.'));
 });
+
+Breadcrumbs::for('products', function ($bc) {
+    $bc->parent('dashboard');
+    $bc->push('Product', route('products.index'));
+});
+
+Breadcrumbs::for('product-items', function ($bc) {
+    $bc->parent('dashboard');
+    $bc->push('Product', route('product-items.index'));
+});

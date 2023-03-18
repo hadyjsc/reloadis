@@ -7,6 +7,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,4 +88,34 @@ Route::controller(ProviderController::class)
         Route::post("/create", "create")->name('create');
         Route::put("/update/{id}", "update")->name('update');
         Route::delete("/delete/{id}", "delete")->name('delete');
+});
+
+Route::controller(ProductController::class)
+    ->prefix('products')
+    ->as('products.')
+    ->group(function() {
+        // router for load view
+        Route::get("/", "index")->name('index');
+        Route::get("/{id}/show", "show")->name('show');
+        Route::get("/create", "create")->name('create');
+        Route::get("/{id}/edit", "edit")->name('edit');
+        // router for query
+        Route::post("/", "insert")->name('insert');
+        Route::put("/{id}/update", "update")->name('update');
+        Route::delete("/", "delete")->name('delete');
+    });
+
+Route::controller(ProductItemController::class)
+->prefix('product-items')
+->as('product-items.')
+->group(function() {
+    // router for load view
+    Route::get("/", "index")->name('index');
+    Route::get("/{id}/show", "show")->name('show');
+    Route::get("/create", "create")->name('create');
+    Route::get("/{id}/edit", "edit")->name('edit');
+    // router for query
+    Route::post("/", "insert")->name('insert');
+    Route::put("/{id}/update", "update")->name('update');
+    Route::delete("/", "delete")->name('delete');
 });
