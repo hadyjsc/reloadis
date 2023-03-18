@@ -6,6 +6,7 @@ use App\Models\Type;
 use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
 use Okipa\LaravelTable\Column;
 use Okipa\LaravelTable\Formatters\DateFormatter;
+use Okipa\LaravelTable\RowActions\ShowRowAction;
 use Okipa\LaravelTable\RowActions\DestroyRowAction;
 use Okipa\LaravelTable\RowActions\EditRowAction;
 use Okipa\LaravelTable\Table;
@@ -18,7 +19,8 @@ class TypesTable extends AbstractTableConfiguration
     {
         return Table::make()->model(Type::class)
             ->rowActions(fn(Type $type) => [
-                new EditRowAction(route('types.update', $type)),
+                new ShowRowAction(route('types.show', $type->id)),
+                new EditRowAction(route('types.edit', $type->id)),
                 new DestroyRowAction(),
             ])
             ->numberOfRowsPerPageOptions([10, 50, 100]);

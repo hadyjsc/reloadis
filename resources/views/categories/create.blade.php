@@ -43,7 +43,10 @@
                                     @enderror
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary ml-3">Submit</button>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <a href="{{route('categories.index')}}" class="btn btn-warning"><i class="fa fa-times"></i> Cancel</a>
+                                <button type="submit" class="btn btn-primary ml-3"><i class="fa fa-save"></i> Save</button>
+                            </div>
                         </div>
                     </form>
                 </div>

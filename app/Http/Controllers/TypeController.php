@@ -15,10 +15,10 @@ class TypeController extends Controller
         return view('types.index', compact('types'));
     }
 
-    public function detail($id)
+    public function show($id)
     {
-        $types = Type::where('id', $id);
-        return view('types.detail', compact('types'));
+        $model = Type::find($id);
+        return view('types.detail', compact('model'));
     }
 
     public function create()
@@ -27,15 +27,36 @@ class TypeController extends Controller
         return view('types.create', compact('types'));
     }
 
-    public function update($id)
+    public function edit($id)
     {
-        $types = Type::class;
-        return view('types.update', compact('types'));
+        $model = Type::find($id);
+        return view('types.edit', compact(['model']));
+    }
+
+    public function update(Request $req, Type $model)
+    {
+        $req->validate(['name' => 'required']);
+
+        $model = Type::find($req->id);
+        $model->name = $req->name;
+        $model->updated_at = now();
+        $model->save();
+
+        return redirect(route('types.edit', $req->id))->with('success', 'Data berhasil diubah.');
     }
 
     public function delete($id)
     {
         $types = Type::class;
         return view('types.index', compact('types'));
+    }
+
+    public function insert(Request $req)
+    {
+        $req->validate(['name'=>'required']);
+
+        Type::create($req->post());
+
+        return redirect(route('types.create'))->with('success', 'Data berhasil disimpan.');
     }
 }

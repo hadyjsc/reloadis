@@ -23,7 +23,7 @@ return [
         'info' => '<i class="fas fa-solid fa-info-circle"></i>',
         'reset' => '<i class="fas fa-solid fa-undo"></i>',
         'drag_drop' => '<i class="fas fa-solid fa-grip-vertical"></i>',
-        'add' => '<i class="fas fa-solid a-plus-circle fa-fw"></i>',
+        'add' => '<i class="fas fa-solid fa-plus-circle fa-fw"></i>',
         'create' => '<i class="fas fa-solid fa-plus-circle fa-fw"></i>',
         'show' => '<i class="fas fa-solid fa-eye fa-fw"></i>',
         'edit' => '<i class="fas fa-solid fa-edit fa-fw"></i>',

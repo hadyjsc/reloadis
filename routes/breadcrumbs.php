@@ -9,27 +9,43 @@ Breadcrumbs::for('dashboard', function ($breadcrumbs) {
 });
 
 Breadcrumbs::for('types', function ($breadcrumbs) {
-    $breadcrumbs->push('Types', route('.'));
+    $breadcrumbs->push('Type', route('types.index'));
 });
 
-Breadcrumbs::for('categories', function ($bc) {
-    $bc->parent('dashboard');
-    $bc->push('Category', route('categories.index'));
+Breadcrumbs::for('types.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('types');
+    $breadcrumbs->push('Create', route('.'));
 });
 
-Breadcrumbs::for('create', function ($bc) {
-    $bc->parent('categories');
-    $bc->push('Create', route('categories.create'));
+Breadcrumbs::for('types.edit', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('types');
+    $breadcrumbs->push('Edit', route('types.edit', $model->id));
+    $breadcrumbs->push($model->name, route('.'));
 });
 
-Breadcrumbs::for('show', function ($bc, $model) {
-    $bc->parent('categories');
-    $bc->push($model->name, route('categories.show', $model->id));
+Breadcrumbs::for('types.show', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('types');
+    $breadcrumbs->push('Show', route('types.show', $model->id));
+    $breadcrumbs->push($model->name, route('.'));
 });
 
-Breadcrumbs::for('edit', function ($bc, $model) {
-    $bc->parent('categories');
-    $bc->push($model->name, route('categories.edit', $model->id));
+Breadcrumbs::for('categories', function ($breadcrumbs) {
+    $breadcrumbs->push('Category', route('categories.index'));
+});
+
+Breadcrumbs::for('create', function ($breadcrumbs) {
+    $breadcrumbs->parent('categories');
+    $breadcrumbs->push('Create', route('categories.create'));
+});
+
+Breadcrumbs::for('show', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('categories');
+    $breadcrumbs->push($model->name, route('categories.show', $model->id));
+});
+
+Breadcrumbs::for('edit', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('categories');
+    $breadcrumbs->push($model->name, route('categories.edit', $model->id));
 });
 
 Breadcrumbs::for('sub-categories', function ($breadcrumbs) {

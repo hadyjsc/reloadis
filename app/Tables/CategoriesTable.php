@@ -14,6 +14,8 @@ use Okipa\LaravelTable\Filters\RelationshipFilter;
 use Okipa\LaravelTable\Table;
 use Okipa\LaravelTable\Result;
 use Illuminate\Database\Query\Builder;
+use Okipa\LaravelTable\HeadActions\AddHeadAction;
+use Okipa\LaravelTable\HeadActions\CreateHeadAction;
 
 class CategoriesTable extends AbstractTableConfiguration
 {
