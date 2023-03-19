@@ -24,10 +24,9 @@ class SubCategoryController extends Controller
     public function create()
     {
         $model = SubCategory::class;
-        $provider = Provider::get(['id', 'name']);
-        $type = Category::get(['id', 'name']);
+        $category = Category::get(['id', 'name']);
 
-        return view('sub-categories.create', compact(['model','provider','type']));
+        return view('sub-categories.create', compact(['model','category']));
     }
 
     public function edit($id)

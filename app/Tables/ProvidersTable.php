@@ -10,6 +10,8 @@ use Okipa\LaravelTable\RowActions\ShowRowAction;
 use Okipa\LaravelTable\RowActions\DestroyRowAction;
 use Okipa\LaravelTable\RowActions\EditRowAction;
 use Okipa\LaravelTable\Table;
+use Okipa\LaravelTable\Result;
+use Illuminate\Database\Query\Builder;
 
 class ProvidersTable extends AbstractTableConfiguration
 {
@@ -38,6 +40,9 @@ class ProvidersTable extends AbstractTableConfiguration
         return [
             // The table results configuration.
             // As results are optional on tables, you may delete this method if you do not use it.
+            Result::make()
+                ->title('Total of data')
+                ->format(static fn(Builder $totalRowsQuery) => $totalRowsQuery->count()),
         ];
     }
 }

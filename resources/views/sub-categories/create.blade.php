@@ -23,23 +23,7 @@
                                     <strong>Category</strong>
                                     <select name="category_id" id="country-dropdown" class="form-control">
                                         <option value="">-- Select Category --</option>
-                                        @foreach ($type as $data)
-                                        <option value="{{$data->id}}">
-                                            {{$data->name}}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    @error('type_id')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <strong>Provider</strong>
-                                    <select name="provider_id" id="country-dropdown" class="form-control">
-                                        <option value="">-- Select Provider --</option>
-                                        @foreach ($provider as $data)
+                                        @foreach ($category as $data)
                                         <option value="{{$data->id}}">
                                             {{$data->name}}
                                         </option>
@@ -53,7 +37,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>Name:</strong>
-                                    <input type="text" name="name" class="form-control" placeholder="Category name">
+                                    <input type="text" name="name" class="form-control" placeholder="Sub Category name">
                                     @error('name')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror

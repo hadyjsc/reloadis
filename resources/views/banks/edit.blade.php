@@ -3,8 +3,8 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Create</h1>
-        {{ Breadcrumbs::render('banks.create') }}
+        <h1>Edit</h1>
+        {{ Breadcrumbs::render('banks.edit', $model) }}
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -15,13 +15,14 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    <form action="{{route('banks.insert')}}" method="post">
+                    <form action="{{route('banks.update', $model->id)}}" method="post">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>Name:</strong>
-                                    <input type="text" name="name" class="form-control" placeholder="Bank name">
+                                    <input type="text" name="name" class="form-control" value="{{$model->name}}" placeholder="Bank name">
                                     @error('name')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror

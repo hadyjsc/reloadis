@@ -9,14 +9,13 @@ class BankController extends Controller
 {
     public function index()
     {
-
         $model = Bank::orderBy('id', 'desc')->paginate(10);
         return view('banks.index', compact('model'));
     }
 
-    public function detail($id)
+    public function show($id)
     {
-        $model = Bank::where('id', $id);
+        $model = Bank::find($id);
         return view('banks.detail', compact('model'));
     }
 
@@ -26,15 +25,36 @@ class BankController extends Controller
         return view('banks.create', compact('model'));
     }
 
-    public function update($id)
+    public function edit($id)
     {
-        $model = Bank::class;
-        return view('banks.update', compact('model'));
+        $model = Bank::find($id);
+        return view('banks.edit', compact(['model']));
+    }
+
+    public function update(Request $req, Bank $model)
+    {
+        $req->validate(['name' => 'required']);
+
+        $model = Bank::find($req->id);
+        $model->name = $req->name;
+        $model->updated_at = now();
+        $model->save();
+
+        return redirect(route('banks.edit', $req->id))->with('success', 'Data berhasil diubah.');
     }
 
     public function delete($id)
     {
-        $model = Bank::class;
+        $model = Type::class;
         return view('banks.index', compact('model'));
+    }
+
+    public function insert(Request $req)
+    {
+        $req->validate(['name'=>'required']);
+
+        Bank::create($req->post());
+
+        return redirect(route('banks.create'))->with('success', 'Data berhasil disimpan.');
     }
 }

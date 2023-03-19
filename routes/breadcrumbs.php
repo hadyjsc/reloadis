@@ -92,9 +92,25 @@ Breadcrumbs::for('sub-categories.show', function ($breadcrumbs, $model) {
     $breadcrumbs->push($model->name, route('sub-categories.show', $model->id));
 });
 
-
 Breadcrumbs::for('banks', function ($breadcrumbs) {
     $breadcrumbs->push('Banks', route('.'));
+});
+
+Breadcrumbs::for('banks.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('banks');
+    $breadcrumbs->push('Create', route('banks.create'));
+});
+
+Breadcrumbs::for('banks.edit', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('banks');
+    $breadcrumbs->push('Edit', route('banks.edit', $model->id));
+    $breadcrumbs->push($model->name, route('banks.edit', $model->id));
+});
+
+Breadcrumbs::for('banks.show', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('banks');
+    $breadcrumbs->push('Show', route('banks.show', $model->id));
+    $breadcrumbs->push($model->name, route('banks.show', $model->id));
 });
 
 Breadcrumbs::for('products', function ($bc) {
