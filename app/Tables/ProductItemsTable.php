@@ -16,7 +16,7 @@ class ProductItemsTable extends AbstractTableConfiguration
     {
         return Table::make()->model(ProductItem::class)
             ->rowActions(fn(ProductItem $productItem) => [
-                new EditRowAction(route('productItem.edit', $productItem)),
+                new EditRowAction(route('product-items.edit', $productItem)),
                 new DestroyRowAction(),
             ]);
     }
@@ -24,9 +24,14 @@ class ProductItemsTable extends AbstractTableConfiguration
     protected function columns(): array
     {
         return [
-            Column::make('id')->sortable(),
-            Column::make('created_at')->format(new DateFormatter('d/m/Y H:i'))->sortable(),
-            Column::make('updated_at')->format(new DateFormatter('d/m/Y H:i'))->sortable()->sortByDefault('desc'),
+            Column::make('id')->title('Id')->sortable(),
+            Column::make('product_id')->title('Product')->format(function(ProductItem $model){
+                return $model->product->category->name.' - '.$model->product->provider->name.' - '.$model->product->quota;
+            })->searchable(),
+            Column::make('serial_number')->title('Nomor Seri'),
+            Column::make('is_sold')->title('Terjual'),
+            Column::make('sold_at')->title('Tanggal Terjual'),
+            Column::make('sold_by')->title('Di Jual Oleh')
         ];
     }
 

@@ -26,6 +26,10 @@ Route::controller(DashboardController::class)->prefix('')->as('.')->group(functi
     Route::get("/dashboard","index");
 });
 
+Route::controller(DashboardController::class)->prefix('dashboard')->as('dashboard.')->group(function() {
+    Route::get("/product", "product")->name("product");
+});
+
 Route::controller(ProviderController::class)
     ->prefix('providers')
     ->as('providers.')

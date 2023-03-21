@@ -12,9 +12,11 @@
 
             <li class="menu-header">Product</li>
 
-            <li class="{{ (request()->is('products') || request()->is('products/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('products.index')}}"><i class="far fa-square"></i> <span>Produk</span></a></li>
+            <li class="{{ (request()->is('dashboard/product') || request()->is('dashboard/product/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('dashboard.product')}}"><i class="fas fa-chart-bar"></i> <span>Statistik</span></a></li>
 
-            <li class="{{ (request()->is('product-items') || request()->is('product-items/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('product-items.index')}}"><i class="far fa-square"></i> <span>Stok</span></a></li>
+            <li class="{{ (request()->is('products') || request()->is('products/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('products.index')}}"><i class="fas fa-sms"></i> <span>Produk</span></a></li>
+
+            <li class="{{ (request()->is('product-items') || request()->is('product-items/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('product-items.index')}}"><i class="fas fa-cubes"></i> <span>Stok</span></a></li>
 
             <li class="menu-header">Master</li>
 

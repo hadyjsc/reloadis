@@ -11,4 +11,9 @@ class DashboardController extends Controller
         $dashboard = "Dashboard";
         return view('stisla-dashboard', compact('dashboard'));
     }
+
+    public function product()
+    {
+        return view('dashboard.product');
+    }
 }

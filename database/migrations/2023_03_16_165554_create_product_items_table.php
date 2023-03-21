@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products', 'id');
             $table->string('serial_number', 100);
-            $table->boolean('is_sold');
-            $table->timestamp('sold_at');
-            $table->integer('sold_by');
+            $table->boolean('is_sold')->nullable();
+            $table->timestamp('sold_at')->nullable();
+            $table->integer('sold_by')->nullable();
             $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

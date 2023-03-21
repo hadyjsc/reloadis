@@ -8,6 +8,10 @@ Breadcrumbs::for('dashboard', function ($breadcrumbs) {
     $breadcrumbs->push('Dashboard', route('.'));
 });
 
+Breadcrumbs::for('dashboard.product', function ($breadcrumbs) {
+    $breadcrumbs->push('Dashboard Product', route('.'));
+});
+
 Breadcrumbs::for('providers', function ($breadcrumbs) {
     $breadcrumbs->push('Provider', route('providers.index'));
 });
@@ -113,12 +117,44 @@ Breadcrumbs::for('banks.show', function ($breadcrumbs, $model) {
     $breadcrumbs->push($model->name, route('banks.show', $model->id));
 });
 
-Breadcrumbs::for('products', function ($bc) {
-    $bc->parent('dashboard');
-    $bc->push('Product', route('products.index'));
+Breadcrumbs::for('products', function ($breadcrumbs) {
+    $breadcrumbs->push('Product', route('products.index'));
 });
 
-Breadcrumbs::for('product-items', function ($bc) {
-    $bc->parent('dashboard');
-    $bc->push('Product', route('product-items.index'));
+Breadcrumbs::for('products.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('products');
+    $breadcrumbs->push('Create', route('products.create'));
+});
+
+Breadcrumbs::for('products.edit', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('products');
+    $breadcrumbs->push('Edit', route('products.edit', $model->id));
+    $breadcrumbs->push($model->name, route('products.edit', $model->id));
+});
+
+Breadcrumbs::for('products.show', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('products');
+    $breadcrumbs->push('Show', route('products.show', $model->id));
+    $breadcrumbs->push($model->name, route('products.show', $model->id));
+});
+
+Breadcrumbs::for('product-items', function ($breadcrumbs) {
+    $breadcrumbs->push('Product Item', route('product-items.index'));
+});
+
+Breadcrumbs::for('product-items.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('product-items');
+    $breadcrumbs->push('Create', route('product-items.create'));
+});
+
+Breadcrumbs::for('product-items.edit', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('product-items');
+    $breadcrumbs->push('Edit', route('product-items.edit', $model->id));
+    $breadcrumbs->push($model->name, route('product-items.edit', $model->id));
+});
+
+Breadcrumbs::for('product-items.show', function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('product-items');
+    $breadcrumbs->push('Show', route('product-items.show', $model->id));
+    $breadcrumbs->push($model->name, route('product-items.show', $model->id));
 });
