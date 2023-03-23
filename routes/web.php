@@ -9,6 +9,7 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductItemController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,13 @@ Route::controller(DashboardController::class)->prefix('')->as('.')->group(functi
 Route::controller(DashboardController::class)->prefix('dashboard')->as('dashboard.')->group(function() {
     Route::get("/product", "product")->name("product");
 });
+
+Route::controller(TransactionController::class)->prefix('transactions')->as('transactions.')->group(function() {
+    Route::get("/selling", "selling")->name("selling");
+    Route::get("/selling/out", "out")->name("out");
+    Route::get("/subcategory", "getSubCategory")->name("getSubCategory");
+});
+
 
 Route::controller(ProviderController::class)
     ->prefix('providers')

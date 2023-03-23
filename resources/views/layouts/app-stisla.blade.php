@@ -22,6 +22,7 @@
         </div>
     </div>
     @include('partials.stisla.scripts')
+    @yield("custom-javascript")
 </body>
 
 </html>

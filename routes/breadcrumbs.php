@@ -158,3 +158,7 @@ Breadcrumbs::for('product-items.show', function ($breadcrumbs, $model) {
     $breadcrumbs->push('Show', route('product-items.show', $model->id));
     $breadcrumbs->push($model->name, route('product-items.show', $model->id));
 });
+
+Breadcrumbs::for('transactions.selling',function ($breadcrumbs) {
+    $breadcrumbs->push('Transaction', route('transactions.selling'));
+});
