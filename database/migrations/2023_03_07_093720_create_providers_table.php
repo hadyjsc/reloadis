@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sub_category_id')->constrained('sub_categories', 'id');
             $table->string('name');
             $table->timestamps();
         });

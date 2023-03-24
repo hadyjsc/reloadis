@@ -10,9 +10,9 @@ class Provider extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'created_at'];
+    protected $fillable = ['name', 'logo', 'color', 'created_at'];
 
-    protected $hidden = ['id', 'name', 'created_at', 'updated_at'];
+    protected $hidden = ['id', 'name', 'logo', 'color', 'created_at', 'updated_at'];
 
     /**
      * Get all of the provider for the Provider

@@ -35,6 +35,7 @@ Route::controller(TransactionController::class)->prefix('transactions')->as('tra
     Route::get("/selling", "selling")->name("selling");
     Route::get("/selling/out", "out")->name("out");
     Route::get("/subcategory", "getSubCategory")->name("getSubCategory");
+    Route::get("/provider", "getProvider")->name("getProvider");
 });
 
 

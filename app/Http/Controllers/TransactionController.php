@@ -45,6 +45,19 @@ class TransactionController extends Controller
             $data[] = ['id'=> $value->id, 'name'=>$value->name];
         }
 
-        return $this->sendResponse($data, "success");
+        return view('transaction.create', compact('data'));
+    }
+
+    public function getProvider(Request $req)
+    {
+        $subCategory = $req['sub-category-id'];
+        $provider = Provider::where('sub_category_id', '=', $subCategory)->get(['id', 'name', 'logo', 'color']);
+
+        $data = [];
+        foreach ($provider as $key => $value) {
+            $data[] = ['id' => $value->id, 'name' => $value->name,  'logo' => $value->logo, 'color' => $value->color,];
+        }
+
+        return $this->sendResponse($data, 'success');
     }
 }
