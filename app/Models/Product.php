@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Hasmany;
 use App\Models\Category;
 use App\Models\Provider;
+use App\Models\SubCategory;
 
 class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_id', 'provider_id', 'quota', 'unit', 'price', 'fund', 'fund_date', 'created_by', 'stocked'];
+    protected $fillable = ['category_id', 'sub_category_id', 'provider_id', 'description', 'quota', 'unit', 'price', 'fund', 'fund_date', 'created_by', 'stocked'];
 
-    protected $hidden = ['id', 'category_id', 'provider_id', 'description', 'quota', 'unit', 'price', 'fund', 'fund_date', 'stocked', 'is_deleted', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+    protected $hidden = ['id', 'category_id', 'sub_category_id', 'provider_id', 'description', 'quota', 'unit', 'price', 'fund', 'fund_date', 'stocked', 'is_deleted', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 
     /**
      * Get the category that owns the Product
@@ -25,6 +26,16 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class)->withDefault();
+    }
+
+    /**
+     * Get the subCategory that owns the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function subCategory(): BelongsTo
+    {
+        return $this->belongsTo(SubCategory::class)->withDefault();
     }
 
     /**

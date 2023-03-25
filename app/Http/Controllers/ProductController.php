@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Exception;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
 use App\Models\Provider;
 
 class ProductController extends Controller
@@ -27,8 +29,9 @@ class ProductController extends Controller
     {
         $model = Product::class;
         $category = Category::get(['id', 'name']);
+        $subcategory = SubCategory::get(['id', 'name']);
         $provider = Provider::get(['id', 'name']);
-        return view('products.create', compact(['model', 'category', 'provider']));
+        return view('products.create', compact(['model', 'category', 'subcategory', 'provider']));
     }
 
     public function edit($id)
@@ -39,29 +42,36 @@ class ProductController extends Controller
 
     public function insert(Request $req)
     {
-        $req->validate([
-            'category_id' => 'required',
-            'provider_id' => 'required',
-            'quota' => 'required',
-            'unit' => 'required',
-            'price' => 'required',
-            'fund' => 'required',
-            'fund_date' => 'required',
-        ]);
+        try {
+            $req->validate([
+                'category_id' => 'required',
+                'provider_id' => 'required',
+                'quota' => 'required',
+                'unit' => 'required',
+                'price' => 'required',
+                'fund' => 'required',
+                'fund_date' => 'required',
+            ]);
 
-        Product::create([
-            'category_id' => $req->category_id,
-            'provider_id' => $req->provider_id,
-            'quota' => $req->quota,
-            'unit' => $req->unit,
-            'price' => $req->price,
-            'fund' => $req->fund,
-            'fund_date' => $req->fund_date,
-            'stocked' => 1,
-            'created_by' => 1,
-        ]);
+            Product::create([
+                'category_id' => $req->category_id,
+                'sub_category_id' => $req->sub_category_id,
+                'provider_id' => $req->provider_id,
+                'quota' => $req->quota,
+                'unit' => $req->unit,
+                'price' => $req->price,
+                'description' => $req->description,
+                'fund' => $req->fund,
+                'fund_date' => $req->fund_date,
+                'stocked' => 1,
+                'created_by' => 1,
+            ]);
 
-        return redirect(route('products.create'))->with('success', 'Data berhasil disimpan.');
+            return redirect(route('products.create'))->with('success', 'Data berhasil disimpan.');
+        } catch (Exception $e) {
+            return redirect(route('products.create'))->with('danger', 'Gagal menyimpan data.'. $e->getMessage());
+        }
+
     }
 
     public function update(Request $request, Product $model)

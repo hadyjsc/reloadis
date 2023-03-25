@@ -28,8 +28,6 @@
                                             <h6>Tersedia<span class="f-right">20</span><br></h6>
                                             <h6 class="">Terjual<span class="f-right">351</span></h6>
                                         @endif
-                                        {{-- <a href="javascript:void(0)" class="stretched-link"
-                                            data-id="{{ $data['id'] }}" data-target="{{ $data['id'] }}"></a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -42,41 +40,11 @@
             @endphp
         @endforeach
     </section>
-    <form class="modal-part" id="modal-transaction">
-        <div class="form-group">
-            <label>Username</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                </div>
-                <input type="text" class="form-control" placeholder="Email" name="email">
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                </div>
-                <input type="password" class="form-control" placeholder="Password" name="password">
-            </div>
-        </div>
-        <div class="form-group mb-0">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" name="remember" class="custom-control-input" id="remember-me">
-                <label class="custom-control-label" for="remember-me">Remember Me</label>
-            </div>
-        </div>
-    </form>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalReporting" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Buat Transaksi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Buat Laporan</h5>
                     <a href="javascript:void(0)" data-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></a>
                 </div>
                 <div class="modal-body"></div>
@@ -92,52 +60,10 @@
 
             $.get(url, function(res, status) {
                 if (status == 'success') {
-                    $("#exampleModal").modal('show').find('.modal-body').html(res);
+                    $("#modalReporting").modal('show').find('.modal-body').html(res);
                 }
             })
         })
-
-        // $(".open-x-modal").fireModal({
-        //     autoFocus: false,
-        //     body: 'Modal body text goes here.',
-        //     appended:function(e) {
-        //         var catID = $(this).data("id");
-        //         var url = "{{ route('transactions.getSubCategory', ['category-id' => 'catID']) }}"
-        //         url = url.replace('catID', catID);
-        //         console.log(e,url)
-        //     }
-        // });
-        // $(".open-x-modal").fireModal({
-        //     title: 'Buat Transaksi',
-        //     body: $("#modal-transaction"),
-        //     footerClass: 'bg-whitesmoke',
-        //     autoFocus: false,
-        //     onFormSubmit: function(modal, e, form) {
-        //         // Form Data
-        //         let form_data = $(e.target).serialize();
-        //         console.log(form_data)
-
-        //         // DO AJAX HERE
-        //         let fake_ajax = setTimeout(function() {
-        //             form.stopProgress();
-        //             modal.find('.modal-body').prepend(
-        //                 '<div class="alert alert-info">Please check your browser console</div>')
-
-        //             clearInterval(fake_ajax);
-        //         }, 1500);
-
-        //         e.preventDefault();
-        //     },
-        //     shown: function(modal, form) {
-        //         console.log(form)
-        //     },
-        //     buttons: [{
-        //         text: 'Login',
-        //         submit: true,
-        //         class: 'btn btn-primary btn-shadow',
-        //         handler: function(modal) {}
-        //     }]
-        // });
     </script>
 @endsection
 @endsection

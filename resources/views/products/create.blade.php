@@ -36,6 +36,22 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
+                                    <strong>Sub Category</strong>
+                                    <select name="sub_category_id" id="country-dropdown" class="form-control">
+                                        <option value="">-- Select Sub Category --</option>
+                                        @foreach ($subcategory as $data)
+                                        <option value="{{$data->id}}">
+                                            {{$data->name}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('type_id')
+                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
                                     <strong>Provider</strong>
                                     <select name="provider_id" id="country-dropdown" class="form-control">
                                         <option value="">-- Select Provider --</option>

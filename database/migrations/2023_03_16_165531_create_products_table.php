@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories', 'id');
-            $table->foreignId('provider_id')->constrained('providers', 'id');
+            $table->foreignId('category_id')->constrained('categories', 'id')->nullable();;
+            $table->foreignId('sub_category_id')->constrained('sub_categories', 'id')->nullable();;
+            $table->foreignId('provider_id')->constrained('providers', 'id')->nullable();;
             $table->string('quota', 5);
             $table->string('unit', 10);
             $table->string('description', 255)->nullable();

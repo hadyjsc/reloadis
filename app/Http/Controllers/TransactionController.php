@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Provider;
+use App\Models\Product;
+use App\Models\ProductItem;
 use App\Http\Resources\SubCategoryResource;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -42,7 +45,7 @@ class TransactionController extends Controller
 
         $data = [];
         foreach ($subCategory as $key => $value) {
-            $data[] = ['id'=> $value->id, 'name'=>$value->name];
+            $data[] = ['id'=> $value->id, 'category_id' => $categoryID, 'name'=>$value->name];
         }
 
         return view('transaction.create', compact('data'));
@@ -55,9 +58,109 @@ class TransactionController extends Controller
 
         $data = [];
         foreach ($provider as $key => $value) {
-            $data[] = ['id' => $value->id, 'name' => $value->name,  'logo' => $value->logo, 'color' => $value->color,];
+            $data[] = ['id' => $value->id, 'sub_category_id' => $subCategory, 'name' => $value->name,  'logo' => $value->logo, 'color' => $value->color,];
         }
 
         return $this->sendResponse($data, 'success');
+    }
+
+    public function stock(Request $req)
+    {
+        $category = $req['category'];
+        $subcategory = $req['sub-category'];
+        $provider = $req['provider'];
+
+        $getAvailable = Product::selectRaw('COUNT(product_items.id) AS total_available_quantity')
+            ->join('product_items', 'products.id', '=', 'product_items.product_id')
+            ->where('products.category_id', '=', $category)
+            ->where('products.sub_category_id', '=', $subcategory)
+            ->where('products.provider_id', '=', $provider)
+            ->where('product_items.is_sold', '=', false)
+            ->pluck('total_available_quantity');
+
+        return $this->sendResponse($getAvailable, 'success');
+
+    }
+
+    public function items(Request $req)
+    {
+        $category = $req['category'];
+        $subcategory = $req['sub-category'];
+        $provider = $req['provider'];
+
+        $getItem = Product::selectRaw('products.id, products.quota ,products.unit, products.description , products.price, COUNT(product_items.id) AS available')
+            ->join('product_items', 'products.id', '=', 'product_items.product_id')
+            ->where('products.category_id', '=', $category)
+            ->where('products.sub_category_id', '=', $subcategory)
+            ->where('products.provider_id', '=', $provider)
+            ->where('products.stocked', '=', true)
+            ->where('products.is_deleted', '=', false)
+            ->where('product_items.is_sold', '=', false)
+            ->groupBy(['products.id'])
+            ->get();
+
+        $data = [];
+        foreach ($getItem as $key => $value) {
+            $data[] = [
+                'id' => $value->id,
+                'quota' => $value->quota,
+                'unit' => $value->unit,
+                'description' => $value->description,
+                'price' => $value->price,
+                'available' => $value->available
+            ];
+        }
+
+        return $this->sendResponse($data, 'success');
+    }
+
+    public function insert(Request $req, Product $model)
+    {
+        $userId = 1;
+        $req->validate([
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
+            'provider_id' => 'required',
+            'product_id' => 'required'
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $model = Product::where('id', '=', $req->product_id)->where('stocked', '=', true)->exists();
+
+            if($model) {
+                $item = ProductItem::where('product_id', '=', $req->product_id)->where('is_sold', '=', false)->first();
+                if ($item) {
+                    $item->is_sold = true;
+                    $item->sold_by = $userId;
+                    $item->sold_at = now();
+                    $item->updated_at = now();
+                    $item->updated_by = $userId;
+                    $item->save();
+
+                    DB::commit();
+
+                    return $this->sendResponse(['product_id' => $req->product_id], 'success');
+                } else {
+                    $model = Product::where('id', '=', $req->product_id)->where('stocked', '=', true)->first();
+                    if($model) {
+                        $model->stocked = false;
+                        $model->updated_by = $userId;
+                        $model->updated_at = now();
+                        $model->save();
+
+                        DB::commit();
+                    }
+                    return $this->sendError( "invalid request", ["error"=> "Tidak ada stok produk."], 200);
+                }
+            }
+
+            DB::commit();
+
+            return $this->sendError( "invalid request", ["error"=> "Produk tidak ditemukan."], 200);
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->sendError( "invalid request", ["error"=> "Tidak dapat melakukan permintaan."], 200);
+        }
     }
 }
