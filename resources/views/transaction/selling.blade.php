@@ -25,8 +25,8 @@
                                     <div class="card-block">
                                         <h4 class="m-b-20">{{ $data['name'] }}</h4>
                                         @if (Str::lower($key) == 'product')
-                                            <h6>Tersedia<span class="f-right">20</span><br></h6>
-                                            <h6 class="">Terjual<span class="f-right">351</span></h6>
+                                            <h6>Tersedia<span class="f-right">{{$data['available']}}</span><br></h6>
+                                            <h6 class="">Terjual<span class="f-right">{{$data['sold']}}</span></h6>
                                         @endif
                                     </div>
                                 </div>

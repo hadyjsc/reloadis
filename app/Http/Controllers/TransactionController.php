@@ -15,12 +15,17 @@ class TransactionController extends Controller
 {
     public function selling()
     {
-        $category_model = Category::join('types', 'types.id', '=', 'categories.type_id')
-        ->get(['categories.id', 'type_id', 'types.name as type', 'categories.name']);
+        $query = DB::table('categories')
+            ->selectRaw('categories.id, categories.name, types.name as type, COUNT(DISTINCT CASE WHEN product_items.is_sold = true THEN product_items.id END) as sold, COUNT(DISTINCT CASE WHEN product_items.is_sold = false THEN product_items.id END) as unsold')
+            ->leftjoin('products', 'categories.id', '=', 'products.category_id')
+            ->leftjoin('product_items', 'products.id', '=', 'product_items.product_id')
+            ->join('types', 'types.id', '=', 'categories.type_id')
+            ->groupBy(['categories.id', 'categories.name'])
+            ->get();
 
         $category = [];
-        foreach ($category_model as $data) {
-            $category[$data->type][] = ['id' => $data->id, 'name' => $data->name, 'type' => $data->type];
+        foreach ($query as $data) {
+            $category[$data->type][] = ['id' => $data->id, 'name' => $data->name, 'type' => $data->type, 'sold' => $data->sold, 'available' => $data->unsold];
         }
 
         return view('transaction.selling', compact(['category']));
@@ -41,11 +46,18 @@ class TransactionController extends Controller
     public function getSubCategory(Request $req)
     {
         $categoryID = $req['category-id'];
-        $subCategory = SubCategory::where('category_id', '=', $categoryID)->get(['id','name']);
+
+        $query = DB::table('sub_categories')
+            ->selectRaw('sub_categories.id, sub_categories.name, COUNT(DISTINCT CASE WHEN product_items.is_sold = true THEN product_items.id END) as sold, COUNT(DISTINCT CASE WHEN product_items.is_sold = false THEN product_items.id END) as unsold')
+            ->join('products', 'sub_categories.id', '=', 'products.sub_category_id')
+            ->join('product_items', 'products.id', '=', 'product_items.product_id')
+            ->groupBy(['sub_categories.id', 'sub_categories.name'])
+            ->where('products.category_id', '=', $categoryID )
+            ->get();
 
         $data = [];
-        foreach ($subCategory as $key => $value) {
-            $data[] = ['id'=> $value->id, 'category_id' => $categoryID, 'name'=>$value->name];
+        foreach ($query as $key => $value) {
+            $data[] = ['id'=> $value->id, 'category_id' => $categoryID, 'name'=>$value->name, 'sold' => $value->sold, 'unsold' => $value->unsold];
         }
 
         return view('transaction.create', compact('data'));

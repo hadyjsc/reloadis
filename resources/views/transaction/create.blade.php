@@ -4,7 +4,7 @@
             <div class="card bg-c-6 order-card show-provider" data-id="{{ $item['id'] }}"
                 data-category="{{ $item['category_id'] }}">
                 <div class="card-body">
-                    <span class="badge badge-primary float-right badge-pill">14</span>
+                    <span class="badge badge-primary float-right badge-pill">{{ $item['unsold'] }}</span>
                     <h6 class="">{{ $item['name'] }}</h6>
                 </div>
             </div>
@@ -26,7 +26,7 @@
             <input type="hidden" id="provider_id" name="provider_id" placeholder="Provider">
             <input type="hidden" id="product_id" name="product_id" placeholder="Product">
 
-            <div class="alert alert-light alert-has-icon">
+            <div class="alert alert-light alert-has-icon" style="display: none">
                 <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
                 <div class="alert-body">
                     <div class="alert-title">Pengecekan Stok</div>
@@ -45,11 +45,12 @@
                     </ul>
                 </div>
             </div>
-
+            <div class="button-group" style="display: none">
             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i>
                 Batal</button>
             <button type="submit" id="create" class="btn btn-primary float-right"><i class="fas fa-save"></i> Simpan
                 Transaksi</button>
+            </div>
         </form>
     </div>
 </div>
@@ -83,6 +84,10 @@
 
     $(".show-provider").click(function() {
         $('.provider-list').html("")
+        $(".alert-light").hide();
+        $(".alert-message").html("")
+        $(".button-group").hide();
+        $(".items").html("")
 
         var categoryID = $(this).data('category')
         $("#category_id").val(categoryID)
@@ -120,8 +125,8 @@
                 $('.provider-list').html(html)
                 $(".select-provider").click(function() {
                     //start state
-                    $(".alert-message").html("")
                     $(".items").html("")
+                    $(".button-group").hide();
                     var providerID = $(this).data('id')
                     $("#provider_id").val(providerID)
 
@@ -149,7 +154,7 @@
                                     <br><a class="btn btn-success float-right mt-2" target="_blank" href="https://wa.me/+6285271404170?text=Stok+%2AKartu+Perdana+Prabayar+Provider+Telkomsel%2A+di+Konter+%2AABC%2A+ada+%2A0%2A.+Tolong+ditambah+lagi+ya+agar+proses+transaksi+penjualan+terus+berjalan."><i class="fab fa-whatsapp"></i> Kirim Pesan</a>`
                                     $("#create").attr('disabled','disabled')
                                 }
-
+                                $(".alert-light").show();
                                 $(".alert").find(".alert-message").html(message)
 
                                 if (isItem) {
@@ -188,7 +193,7 @@
 
                                                     html.push(itemEl)
                                                 });
-
+                                                $(".button-group").show();
                                                 $(".items").html(html)
 
                                                 $('.list-group-item').on('click', function() {
