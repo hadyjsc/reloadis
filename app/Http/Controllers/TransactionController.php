@@ -13,6 +13,36 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
+    public function index()
+    {
+        // $query = DB::table('products')
+        //     ->selectRaw('products.id, products.provider_id, products.price, products.fund,
+        //         COUNT(product_items.id) AS stock,
+        //         COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS sold,
+        //         COUNT(product_items.id) - COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS last_stock,
+        //         (products.price - products.fund) * COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS profit'
+        //     )->join('product_items', 'products.id', '=', 'product_items.product_id')
+        //     ->groupBy(['products.id', 'products.provider_id', 'products.price', 'products.fund'])
+        //     ->get();
+
+        // $report = [];
+        // foreach ($query as $key => $value) {
+        //     $report[] = [
+        //         'id' => $value->id,
+        //         'provider_id' => $value->provider_id,
+        //         'price' => $value->price,
+        //         'fund' => $value->fund,
+        //         'stock' => $value->stock,
+        //         'last_stock' => $value->last_stock,
+        //         'sold' => $value->sold,
+        //         'profit' => $value->profit,
+        //     ];
+        // }
+
+        // return view('transaction.index', compact('report'));
+        return view('transaction.index');
+    }
+
     public function selling()
     {
         $query = DB::table('categories')

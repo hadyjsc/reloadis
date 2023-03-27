@@ -32,6 +32,7 @@ Route::controller(DashboardController::class)->prefix('dashboard')->as('dashboar
 });
 
 Route::controller(TransactionController::class)->prefix('transactions')->as('transactions.')->group(function() {
+    Route::get("/index", "index")->name("index");
     Route::get("/selling", "selling")->name("selling");
     Route::get("/selling/out", "out")->name("out");
     Route::get("/subcategory", "getSubCategory")->name("getSubCategory");

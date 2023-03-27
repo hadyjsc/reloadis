@@ -10,7 +10,9 @@
             <li class="{{ (request()->is('dashboard')) ? 'active' : '' }}"><a class="nav-link" href="{{route('.')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
             <li class="menu-header">Transaksi</li>
 
-            <li class="{{ (request()->is('transactions') || request()->is('transactions/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('transactions.selling')}}"><i class="fas fa-retweet"></i> <span>Penjualan</span></a></li>
+            <li class="{{ (request()->is('transactions') || request()->is('transactions/index')) ? 'active' : '' }}"><a class="nav-link" href="{{route('transactions.index')}}"><i class="fas fa-retweet"></i> <span>Rekap</span></a></li>
+
+            <li class="{{ (request()->is('transactions') || request()->is('transactions/selling')) ? 'active' : '' }}"><a class="nav-link" href="{{route('transactions.selling')}}"><i class="fas fa-retweet"></i> <span>Pelaporan</span></a></li>
 
             <li class="menu-header">Product</li>
 
