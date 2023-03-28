@@ -172,4 +172,38 @@ Breadcrumbs::for('users.create',function ($breadcrumbs) {
     $breadcrumbs->push('Create', route('users.create'));
 });
 
+Breadcrumbs::for('permissions.index',function ($breadcrumbs) {
+    $breadcrumbs->push('Permission', route('permissions.index'));
+});
 
+Breadcrumbs::for('permissions.create',function ($breadcrumbs) {
+    $breadcrumbs->parent('permissions.index');
+    $breadcrumbs->push('Create', route('permissions.create'));
+});
+
+Breadcrumbs::for('permissions.edit',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('permissions.index');
+    $breadcrumbs->push('Edit', route('permissions.edit', $model->id));
+    $breadcrumbs->push($model->name, route('permissions.edit', $model->id));
+});
+
+Breadcrumbs::for('roles.index',function ($breadcrumbs) {
+    $breadcrumbs->push('Role', route('roles.index'));
+});
+
+Breadcrumbs::for('roles.create',function ($breadcrumbs) {
+    $breadcrumbs->parent('roles.index');
+    $breadcrumbs->push('Create', route('roles.create'));
+});
+
+Breadcrumbs::for('roles.edit',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('roles.index');
+    $breadcrumbs->push('Edit', route('roles.edit', $model->id));
+    $breadcrumbs->push($model->name, route('roles.edit', $model->id));
+});
+
+Breadcrumbs::for('roles.show',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('roles.index');
+    $breadcrumbs->push('Show', route('roles.show', $model->id));
+    $breadcrumbs->push($model->name, route('roles.show', $model->id));
+});

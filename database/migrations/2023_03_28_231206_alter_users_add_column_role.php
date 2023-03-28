@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('providers')) {
-            Schema::create('providers', function (Blueprint $table) {
-                $table->id();
-                $table->foreignId('sub_category_id')->constrained('sub_categories', 'id');
-                $table->string('name');
-                $table->timestamps();
+        Schema::table('users', function($table)
+        {
+            Schema::table('users', function (Blueprint $table) {
+                $table->foreignId('role_id')->nullable()->after('email')->constrained('roles', 'id');
             });
-        }
+        });
     }
 
     /**
@@ -30,6 +28,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('providers');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role_id');
+        });
     }
 };

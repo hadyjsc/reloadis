@@ -12,6 +12,8 @@ use App\Http\Controllers\ProductItemController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\PermissionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,7 @@ Route::group(['middleware' => ['guest']], function() {
 });
 
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth', 'permission']], function() {
     Route::controller(DashboardController::class)->prefix('')->as('.')->group(function(){
         Route::get("/", "index");
         Route::get("/dashboard","index");
@@ -46,6 +48,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post("/insert", "insert")->name("insert");
         Route::get("/logout", "logout")->name("logout");
     });
+
+    Route::resource('roles', RolesController::class);
+    Route::resource('permissions', PermissionsController::class);
+
 });
 
 

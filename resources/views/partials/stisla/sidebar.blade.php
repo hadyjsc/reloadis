@@ -39,6 +39,12 @@
             <li class="{{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> <span>Cabang</span></a></li>
 
             <li class="{{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> <span>Karyawan</span></a></li>
+
+            <li class="menu-header">Admin Panel</li>
+
+            <li class="{{ (request()->is('permissions') || request()->is('permissions/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('permissions.index')}}"><i class="fas fa-users"></i> <span>Permission</span></a></li>
+
+            <li class="{{ (request()->is('roles') || request()->is('roles/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('roles.index')}}"><i class="fas fa-users"></i> <span>Role</span></a></li>
         </ul>
     </aside>
 </div>

@@ -10,7 +10,7 @@
     @include('partials.stisla.styles')
 </head>
 
-<body>
+<body class="orange">
     <div id="app">
         <div class="main-wrapper">
             @include('partials.stisla.navigation')
