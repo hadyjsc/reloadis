@@ -162,3 +162,14 @@ Breadcrumbs::for('product-items.show', function ($breadcrumbs, $model) {
 Breadcrumbs::for('transactions.selling',function ($breadcrumbs) {
     $breadcrumbs->push('Transaction', route('transactions.selling'));
 });
+
+Breadcrumbs::for('users.index',function ($breadcrumbs) {
+    $breadcrumbs->push('Karyawan', route('users.index'));
+});
+
+Breadcrumbs::for('users.create',function ($breadcrumbs) {
+    $breadcrumbs->parent('users.index');
+    $breadcrumbs->push('Create', route('users.create'));
+});
+
+

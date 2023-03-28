@@ -33,6 +33,12 @@
             <li class="{{ (request()->is('providers') || request()->is('providers/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('providers.index')}}"><i class="far fa-square"></i> <span>Provider</span></a></li>
 
             <li class="{{ (request()->is('banks') || request()->is('banks/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('banks.index')}}"><i class="far fa-square"></i> <span>Bank</span></a></li>
+
+            <li class="menu-header">Resources</li>
+
+            <li class="{{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> <span>Cabang</span></a></li>
+
+            <li class="{{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> <span>Karyawan</span></a></li>
         </ul>
     </aside>
 </div>

@@ -10,6 +10,8 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductItemController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,12 @@ use App\Http\Controllers\TransactionController;
 |
 */
 
+Route::controller(LoginController::class)->prefix('login')->as('login.')->group(function(){
+    Route::get("/", "index")->name('index');
+    Route::post("/", "perform")->name('perform');
+});
+
+
 Route::controller(DashboardController::class)->prefix('')->as('.')->group(function(){
     Route::get("", "index");
     Route::get("/dashboard","index");
@@ -29,6 +37,14 @@ Route::controller(DashboardController::class)->prefix('')->as('.')->group(functi
 
 Route::controller(DashboardController::class)->prefix('dashboard')->as('dashboard.')->group(function() {
     Route::get("/product", "product")->name("product");
+});
+
+Route::controller(UserController::class)->prefix('users')->as('users.')->group(function() {
+    Route::get("/", "index")->name("index");
+    Route::get("/create", "create")->name("create");
+    Route::get("/{id}/edit", "edit")->name('edit');
+
+    Route::POST("/insert", "insert")->name("insert");
 });
 
 Route::controller(TransactionController::class)->prefix('transactions')->as('transactions.')->group(function() {
