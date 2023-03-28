@@ -24,27 +24,33 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::controller(LoginController::class)->prefix('login')->as('login.')->group(function(){
-    Route::get("/", "index")->name('index');
-    Route::post("/", "perform")->name('perform');
+Route::group(['middleware' => ['guest']], function() {
+    Route::controller(LoginController::class)->prefix('login')->as('login.')->group(function(){
+        Route::get("/", "index")->name('index');
+        Route::post("/", "perform")->name('perform');
+    });
 });
 
 
-Route::controller(DashboardController::class)->prefix('')->as('.')->group(function(){
-    Route::get("", "index");
-    Route::get("/dashboard","index");
+Route::group(['middleware' => ['auth']], function() {
+    Route::controller(DashboardController::class)->prefix('')->as('.')->group(function(){
+        Route::get("/", "index");
+        Route::get("/dashboard","index");
+    });
+
+    Route::controller(UserController::class)->prefix('users')->as('users.')->group(function() {
+        Route::get("/", "index")->name("index");
+        Route::get("/create", "create")->name("create");
+        Route::get("/{id}/edit", "edit")->name('edit');
+
+        Route::post("/insert", "insert")->name("insert");
+        Route::get("/logout", "logout")->name("logout");
+    });
 });
+
 
 Route::controller(DashboardController::class)->prefix('dashboard')->as('dashboard.')->group(function() {
     Route::get("/product", "product")->name("product");
-});
-
-Route::controller(UserController::class)->prefix('users')->as('users.')->group(function() {
-    Route::get("/", "index")->name("index");
-    Route::get("/create", "create")->name("create");
-    Route::get("/{id}/edit", "edit")->name('edit');
-
-    Route::POST("/insert", "insert")->name("insert");
 });
 
 Route::controller(TransactionController::class)->prefix('transactions')->as('transactions.')->group(function() {

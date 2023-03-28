@@ -13,7 +13,7 @@ class LoginController extends Controller
         return view('login');
     }
 
-    public function login(LoginRequest $req)
+    public function perform(LoginRequest $req)
     {
         $req->validate([
             'email' => 'required|email',

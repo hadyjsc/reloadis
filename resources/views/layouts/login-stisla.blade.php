@@ -26,11 +26,12 @@
                             </div>
 
                             <div class="card-body">
-                                <form method="POST" action="{{route('login.perform')}}" class="needs-validation" novalidate="">
+                                <form method="POST" action="{{route('login.perform')}}">
+                                    @csrf
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
-                                        @error('name')
+                                        <input id="email" type="email" class="form-control" name="email">
+                                        @error('email')
                                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -44,8 +45,8 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
-                                        @error('name')
+                                        <input id="password" type="password" class="form-control" name="password">
+                                        @error('password')
                                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                         @enderror
                                     </div>
