@@ -1,10 +1,14 @@
 @extends('layouts.app-stisla')
-
+@php
+// echo "<pre>";
+// print_r($roles);
+// exit;
+@endphp
 @section('content')
 <section class="section">
     <div class="section-header">
-        <h1>Create</h1>
-        {{ Breadcrumbs::render('users.create') }}
+        <h1>Edit</h1>
+        {{ Breadcrumbs::render('users.edit', $user) }}
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -14,18 +18,15 @@
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
                         </div>
-                    @elseif ($message = Session::get('error'))
-                        <div class="alert alert-danger">
-                            <p>{{ $message }}</p>
-                        </div>
                     @endif
-                    <form action="{{route('users.insert')}}" method="post">
+                    <form action="{{route('users.update', $user['id'])}}" method="post">
                         @csrf
+                        @method('put')
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>Name:</strong>
-                                    <input type="text" name="name" class="form-control" placeholder="User name">
+                                    <input type="text" name="name" class="form-control" placeholder="User name" value="{{ $user['name'] }}">
                                     @error('name')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror
@@ -34,7 +35,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>Email:</strong>
-                                    <input type="email" name="email" class="form-control" placeholder="User email">
+                                    <input type="email" name="email" class="form-control" placeholder="User email" value="{{ $user['email'] }}">
                                     @error('email')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror
@@ -42,29 +43,11 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <strong>Password:</strong>
-                                    <input type="password" name="password" class="form-control" placeholder="User password">
-                                    @error('password')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <strong>Password Confirmation:</strong>
-                                    <input type="password" name="password_confirmation" class="form-control" placeholder="Password confirmation">
-                                    @error('password_confirmation')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <strong>Role:</strong>
-                                    <select class="form-control" name="role_id">
+                                    <strong>Roles:</strong>
+                                    <select class="form-control" name="role_id" required>
                                         <option value="">Select role</option>
                                         @foreach($roles as $role)
-                                            <option value="{{ $role['id'] }}">{{ $role['name'] }}</option>
+                                            <option value="{{ $role['id'] }}" {{ $role['name'] == $userRole ? 'selected' : '' }}>{{ $role['name'] }}</option>
                                         @endforeach
                                     </select>
                                     @error('role_id')

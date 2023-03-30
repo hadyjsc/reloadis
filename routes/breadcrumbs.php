@@ -172,6 +172,12 @@ Breadcrumbs::for('users.create',function ($breadcrumbs) {
     $breadcrumbs->push('Create', route('users.create'));
 });
 
+Breadcrumbs::for('users.edit',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('users.index');
+    $breadcrumbs->push('Edit', route('users.edit', $model->id));
+    $breadcrumbs->push($model->name, route('users.edit', $model->id));
+});
+
 Breadcrumbs::for('permissions.index',function ($breadcrumbs) {
     $breadcrumbs->push('Permission', route('permissions.index'));
 });

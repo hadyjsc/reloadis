@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\ProductItem;
 use App\Http\Resources\SubCategoryResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -56,6 +57,10 @@ class TransactionController extends Controller
         $category = [];
         foreach ($query as $data) {
             $category[$data->type][] = ['id' => $data->id, 'name' => $data->name, 'type' => $data->type, 'sold' => $data->sold, 'available' => $data->unsold];
+        }
+
+        if(Auth::user()->hasRole(['Counter', 'counter'])) {
+            return view('transaction.counter-selling', compact(['category']));
         }
 
         return view('transaction.selling', compact(['category']));
@@ -158,7 +163,7 @@ class TransactionController extends Controller
 
     public function insert(Request $req, Product $model)
     {
-        $userId = 1;
+        $userId = Auth::user()->id;
         $req->validate([
             'category_id' => 'required',
             'sub_category_id' => 'required',

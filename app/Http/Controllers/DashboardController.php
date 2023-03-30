@@ -16,4 +16,9 @@ class DashboardController extends Controller
     {
         return view('dashboard.product');
     }
+
+    public function counter()
+    {
+        # code...
+    }
 }

@@ -42,6 +42,10 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        return redirect()->intended();
+        if($user->hasRole("admin") || $user->hasRole("Admin")) {
+            return redirect()->intended();
+        }
+
+        return redirect()->route('transactions.selling');
     }
 }
