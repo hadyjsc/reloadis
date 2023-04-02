@@ -58,7 +58,7 @@
             var catID = $(this).data("id");
             var catName = $(this).data("name");
             if (catName == "transfer") {
-                $.get("{{ route('transactions.transfer') }}", function (res, status) {
+                $.get("{{ route('transfers.index') }}", function (res, status) {
                     if (status == 'success') {
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }

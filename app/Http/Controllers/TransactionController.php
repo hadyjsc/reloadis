@@ -81,44 +81,6 @@ class TransactionController extends Controller
         return view('transaction.out', compact(['subCategory', 'provider']));
     }
 
-    public function transfer()
-    {
-        $banks = Bank::get(['id', 'name', 'logo']);
-        return view('transaction.bank-transfer', compact('banks'));
-    }
-
-    public function transferStore(Request $req, Transfer $model)
-    {
-        $userId = Auth::user()->id;
-        $req->validate([
-            'bank_account' => 'required|numeric',
-            'amount' => 'required|numeric'
-        ]);
-
-        DB::beginTransaction();
-        try {
-            $model::create([
-                'uuid' => Str::uuid(),
-                'bank_account' => $req->bank_account,
-                'amount' => $req->amount,
-                'sender' => $req->sender,
-                'bank_id' => $req->bank_id,
-                'note' => $req->note,
-                'receiver' => $req->receiver,
-                'status' => Str::upper('sent'),
-                'created_at' => now(),
-                'created_by' => $userId,
-            ]);
-
-            DB::commit();
-
-            return $this->sendResponse($model, 'success');
-        } catch (Exception $e) {
-            DB::rollback();
-            return $this->sendError( "invalid request", ["error"=> "Tidak dapat melakukan permintaan."], 200);
-        }
-    }
-
     public function getSubCategory(Request $req)
     {
         $categoryID = $req['category-id'];

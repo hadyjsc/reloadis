@@ -40,16 +40,16 @@ class TransactionReportTable extends AbstractTableConfiguration
                 return '<strong style="color:'.$data['color'].'">'.$data['name'].'</strong>';
             } ),
             Column::make('price')->title('Harga')->format(function($data) {
-                return 'Rp. '.number_format($data['price'], 0, ',', '.');;
+                return 'Rp. '.number_format($data['price'], 0, ',', '.');
             }),
             Column::make('fund')->title('Modal')->format(function($data) {
-                return 'Rp. '.number_format($data['fund'], 0, ',', '.');;
+                return 'Rp. '.number_format($data['fund'], 0, ',', '.');
             }),
             Column::make('stock')->title('Stok'),
             Column::make('last_stock')->title('Sisa Stok'),
             Column::make('sold')->title('Terjual'),
             Column::make('profit')->title('Keuntungan')->format(function($data) {
-                return 'Rp. '.number_format($data['profit'], 0, ',', '.');;
+                return 'Rp. '.number_format($data['profit'], 0, ',', '.');
             }),
         ];
     }

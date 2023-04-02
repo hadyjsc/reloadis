@@ -14,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
+use App\Http\Controllers\TransferController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,8 +70,17 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::get("/stock", "stock")->name("stock");
             Route::get("/items", "items")->name("items");
             Route::get("/transfer", "transfer")->name("transfer");
+
             Route::post("/insert", "insert")->name("insert");
-            Route::post("/transfer-store", "transferStore")->name('transferStore');
+        });
+
+        Route::controller(TransferController::class)->prefix('transfers')->as('transfers.')->group(function(){
+            Route::get("/", "index")->name("index");
+            Route::get("/{uuid}/show", "show")->name("show");
+
+            Route::post("/", "store")->name('store');
+            Route::put("/{uuid}/update", "update")->name('update');
+            Route::put("/{uuid}/status", "status")->name('status');
         });
 
 

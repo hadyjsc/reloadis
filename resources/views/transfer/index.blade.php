@@ -92,7 +92,7 @@
 
         $.ajax({
             data: form_data,
-            url: "{{ route('transactions.transferStore') }}",
+            url: "{{ route('transfers.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (res) {
