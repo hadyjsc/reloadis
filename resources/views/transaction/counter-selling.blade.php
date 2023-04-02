@@ -63,6 +63,12 @@
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }
                 })
+            } else if(catName == "tarik tunai") {
+                $.get("{{ route('cash-withdrawals.index') }}", function (res, status) {
+                    if (status == 'success') {
+                        $("#modalReporting").modal('show').find('.modal-body').html(res);
+                    }
+                })
             } else {
                 var url = "{{ route('transactions.getSubCategory', ['category-id' => 'catID']) }}"
                 url = url.replace('catID', catID);

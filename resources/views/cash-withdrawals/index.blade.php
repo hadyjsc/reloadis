@@ -4,7 +4,6 @@
             <div class="card img-fluid selected-bank" data-id="{{ $item['id'] }}">
                 <img class="card-img" src="{{ $item['logo'] }}" alt="Logo {{ $item['name'] }}" style="height:60px">
                 <div class="card-img-overlay text-center text-white">
-                    {{-- <h4 class="">{{ $item['name'] }}</h4> --}}
                     <label class="bank-name" style="display: none">{{ $item['name'] }}</label>
                 </div>
             </div>
@@ -19,46 +18,34 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Nama Pengirim:</strong>
-                        <input value="{{ old('sender') }}" type="text" class="form-control" name="sender"
-                            placeholder="Nama Pengirim">
-                        @error('sender')
-                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Nomor Rekening:</strong>
-                        <input value="{{ old('bank_account') }}" type="text" class="form-control" name="bank_account"
-                            placeholder="Nomor Rekening">
-                        @error('bank_account')
-                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Nama Penerima:</strong>
-                        <input value="{{ old('receiver') }}" type="text" class="form-control" name="receiver"
-                            placeholder="Nama Penerima">
-                        @error('receiver')
-                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Jumlah Uang:</strong>
+                        <strong>Nominal:</strong>
                         <input value="{{ old('amount') }}" type="text" class="form-control" name="amount"
-                            placeholder="Jumlah Uang">
-                        @error('receiver')
+                            placeholder="Nominal penarikan">
+                        @error('amount')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Biaya External:</strong>
+                        <input value="{{ old('external_fee') }}" type="text" class="form-control" name="external_fee"
+                            placeholder="Biaya Eksternal">
+                        @error('external_fee')
+                            <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Biaya Internal:</strong>
+                        <input value="{{ old('internal_fee') }}" type="text" class="form-control" name="internal_fee"
+                            placeholder="Biaya Internal">
+                        @error('internal_fee')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -92,26 +79,13 @@
 
         $.ajax({
             data: form_data,
-            url: "{{ route('transactions.transferStore') }}",
+            url: "{{ route('cash-withdrawals.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (res) {
                 if (res.success) {
                     $('#form').trigger("reset");
                     $('#modalReporting').modal('hide');
-
-                    let data = res.data
-                    for (let i = 0; i < data.phone.length; i++) {
-                        var message = `Ada+permintaan+untuk+transfer+ke+%2ABank+${data.bank_name}%2A+dengan+nominal+%2A${data.amount}%2A%2C+lihat+detail+pada+link%3A%0D%0A${data.url}%0D%0ARequest+dari+${data.requestor}.`
-                        var wa = `https://wa.me/${data.phone[i]}?text=${message}`
-                        var win = window.open(wa, '_blank');
-                        if (win) {
-                            win.focus();
-                        } else {
-                            alert('Please allow popups for this website');
-                        }
-                    }
-
                 } else {
                     $(".alert-danger").show()
                     $(".alert-danger").find(".alert-message").html(res.data.error)

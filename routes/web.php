@@ -15,6 +15,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\CashWithdrawalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +70,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::get("/provider", "getProvider")->name("getProvider");
             Route::get("/stock", "stock")->name("stock");
             Route::get("/items", "items")->name("items");
-            Route::get("/transfer", "transfer")->name("transfer");
 
             Route::post("/insert", "insert")->name("insert");
         });
@@ -83,6 +83,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::put("/{uuid}/status", "status")->name('status');
         });
 
+        Route::controller(CashWithdrawalController::class)->prefix('cash-withdrawals')->as('cash-withdrawals.')->group(function() {
+            Route::get('/', 'index')->name('index');
+
+            Route::post('/', 'store')->name('store');
+        });
 
         Route::controller(ProviderController::class)
             ->prefix('providers')

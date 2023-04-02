@@ -9,7 +9,6 @@ use App\Models\Provider;
 use App\Models\Product;
 use App\Models\ProductItem;
 use App\Models\Bank;
-use App\Models\Transfer;
 use App\Http\Resources\SubCategoryResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;

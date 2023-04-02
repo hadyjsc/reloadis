@@ -16,12 +16,27 @@ class Controller extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendResponse($result, $message)
+    public function createdResponse($result = [], $message = null)
     {
     	$response = [
             'success' => true,
             'data'    => $result,
-            'message' => $message,
+            'message' => $message ? $message : 'resource created successfully',
+        ];
+        return response()->json($response, 201);
+    }
+
+    /**
+     * success response method.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sendResponse($result, $message = null)
+    {
+    	$response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message ? $message : 'success',
         ];
         return response()->json($response, 200);
     }
