@@ -68,7 +68,7 @@
     </div>
 </section>
 @endsection
-@section('scripts')
+@section('custom-javascript')
     <script type="text/javascript">
         $(document).ready(function() {
             $('[name="all_permission"]').on('click', function() {

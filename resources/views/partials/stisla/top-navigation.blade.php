@@ -92,14 +92,14 @@
 <nav class="navbar navbar-secondary navbar-expand-lg">
     <div class="container">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href="{{ "#" }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+            <li class="nav-item {{ (request()->is('dashboard') || request()->is('dashboard/counter')) ? 'active' : '' }}">
+                <a href="{{ route('dashboard.counter') }}" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            <li class="nav-item active">
-                <a href="{{ route('transactions.selling' )}}" class="nav-link"><i class="far fa-heart"></i><span>Pelaporan</span></a>
+            <li class="nav-item {{ (request()->is('transactions') || request()->is('transactions/selling')) ? 'active' : '' }}">
+                <a href="{{ route('transactions.selling' )}}" class="nav-link"><i class="fas fa-money-check-alt"></i><span>Pelaporan</span></a>
             </li>
-            <li class="nav-item">
-                <a href="{{ "#" }}" class="nav-link"><i class="far fa-heart"></i><span>Monitoring</span></a>
+            <li class="nav-item {{ (request()->is('transactions') || request()->is('transactions/index')) ? 'active' : '' }}">
+                <a href="{{ "#" }}" class="nav-link"><i class="fas fa-user-clock"></i><span>Monitoring</span></a>
             </li>
         </ul>
     </div>

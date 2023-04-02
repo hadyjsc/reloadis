@@ -9,7 +9,7 @@ class Bank extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'created_at'];
+    protected $fillable = ['name', 'logo', 'created_at'];
 
-    protected $hidden = ['id', 'name', 'created_at', 'updated_at'];
+    protected $hidden = ['id', 'name', 'logo', 'created_at', 'updated_at'];
 }

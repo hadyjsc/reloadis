@@ -8,9 +8,12 @@ use App\Models\SubCategory;
 use App\Models\Provider;
 use App\Models\Product;
 use App\Models\ProductItem;
+use App\Models\Bank;
+use App\Models\Transfer;
 use App\Http\Resources\SubCategoryResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
@@ -76,6 +79,44 @@ class TransactionController extends Controller
         $subCategory = SubCategory::where('category_id', '=', $categoryID)->get();
 
         return view('transaction.out', compact(['subCategory', 'provider']));
+    }
+
+    public function transfer()
+    {
+        $banks = Bank::get(['id', 'name', 'logo']);
+        return view('transaction.bank-transfer', compact('banks'));
+    }
+
+    public function transferStore(Request $req, Transfer $model)
+    {
+        $userId = Auth::user()->id;
+        $req->validate([
+            'bank_account' => 'required|numeric',
+            'amount' => 'required|numeric'
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $model::create([
+                'uuid' => Str::uuid(),
+                'bank_account' => $req->bank_account,
+                'amount' => $req->amount,
+                'sender' => $req->sender,
+                'bank_id' => $req->bank_id,
+                'note' => $req->note,
+                'receiver' => $req->receiver,
+                'status' => Str::upper('sent'),
+                'created_at' => now(),
+                'created_by' => $userId,
+            ]);
+
+            DB::commit();
+
+            return $this->sendResponse($model, 'success');
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->sendError( "invalid request", ["error"=> "Tidak dapat melakukan permintaan."], 200);
+        }
     }
 
     public function getSubCategory(Request $req)

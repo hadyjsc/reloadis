@@ -21,7 +21,8 @@
                                     data-target="{{ $data['id'] }}"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
-                                    data-bs-whatever="@mdo">
+                                    data-bs-whatever="@mdo"
+                                    data-name="{{ Str::lower($key) }}">
                                     <div class="card-block">
                                         <h4 class="m-b-20">{{ $data['name'] }}</h4>
                                         @if (Str::lower($key) == 'product')

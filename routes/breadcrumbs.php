@@ -12,6 +12,10 @@ Breadcrumbs::for('dashboard.product', function ($breadcrumbs) {
     $breadcrumbs->push('Dashboard Product', route('.'));
 });
 
+Breadcrumbs::for('dashboard.counter', function ($breadcrumbs) {
+    $breadcrumbs->push('Dashboard Counter', route('dashboard.counter'));
+});
+
 Breadcrumbs::for('providers', function ($breadcrumbs) {
     $breadcrumbs->push('Provider', route('providers.index'));
 });

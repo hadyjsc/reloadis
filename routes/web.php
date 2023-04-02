@@ -57,6 +57,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
         Route::controller(DashboardController::class)->prefix('dashboard')->as('dashboard.')->group(function() {
             Route::get("/product", "product")->name("product");
+            Route::get("/counter", "counter")->name("counter");
         });
 
         Route::controller(TransactionController::class)->prefix('transactions')->as('transactions.')->group(function() {
@@ -67,7 +68,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::get("/provider", "getProvider")->name("getProvider");
             Route::get("/stock", "stock")->name("stock");
             Route::get("/items", "items")->name("items");
-            Route::POST("/insert", "insert")->name("insert");
+            Route::get("/transfer", "transfer")->name("transfer");
+            Route::post("/insert", "insert")->name("insert");
+            Route::post("/transfer-store", "transferStore")->name('transferStore');
         });
 
 

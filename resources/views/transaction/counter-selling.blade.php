@@ -21,7 +21,8 @@
                                     data-target="{{ $data['id'] }}"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
-                                    data-bs-whatever="@mdo">
+                                    data-bs-whatever="@mdo"
+                                    data-name="{{ Str::lower($key) }}">
                                     <div class="card-block">
                                         <h4 class="m-b-20">{{ $data['name'] }}</h4>
                                         @if (Str::lower($key) == 'product')
@@ -55,14 +56,23 @@
     <script>
         $(".open-x-modal").click(function() {
             var catID = $(this).data("id");
-            var url = "{{ route('transactions.getSubCategory', ['category-id' => 'catID']) }}"
-            url = url.replace('catID', catID);
+            var catName = $(this).data("name");
+            if (catName == "transfer") {
+                $.get("{{ route('transactions.transfer') }}", function (res, status) {
+                    if (status == 'success') {
+                        $("#modalReporting").modal('show').find('.modal-body').html(res);
+                    }
+                })
+            } else {
+                var url = "{{ route('transactions.getSubCategory', ['category-id' => 'catID']) }}"
+                url = url.replace('catID', catID);
 
-            $.get(url, function(res, status) {
-                if (status == 'success') {
-                    $("#modalReporting").modal('show').find('.modal-body').html(res);
-                }
-            })
+                $.get(url, function(res, status) {
+                    if (status == 'success') {
+                        $("#modalReporting").modal('show').find('.modal-body').html(res);
+                    }
+                })
+            }
         })
     </script>
     @endsection
