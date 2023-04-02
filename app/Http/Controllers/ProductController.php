@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Provider;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -42,10 +44,11 @@ class ProductController extends Controller
 
     public function insert(Request $req)
     {
+        $user = Auth::user();
+        DB::beginTransaction();
         try {
             $req->validate([
                 'category_id' => 'required',
-                'provider_id' => 'required',
                 'quota' => 'required',
                 'unit' => 'required',
                 'price' => 'required',
@@ -64,12 +67,12 @@ class ProductController extends Controller
                 'fund' => $req->fund,
                 'fund_date' => $req->fund_date,
                 'stocked' => 1,
-                'created_by' => 1,
+                'created_by' => $user->id,
             ]);
-
+            DB::commit();
             return redirect(route('products.create'))->with('success', 'Data berhasil disimpan.');
         } catch (Exception $e) {
-            return redirect(route('products.create'))->with('danger', 'Gagal menyimpan data.'. $e->getMessage());
+            return redirect(route('products.create'))->with('error', 'Gagal menyimpan data.'. $e->getMessage());
         }
 
     }

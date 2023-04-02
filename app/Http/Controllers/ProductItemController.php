@@ -25,7 +25,7 @@ class ProductItemController extends Controller
     {
         $model = ProductItem::class;
         $product = Product::join('categories', 'categories.id', '=', 'products.category_id')
-                    ->join('providers', 'providers.id', '=', 'products.provider_id')
+                    ->leftjoin('providers', 'providers.id', '=', 'products.provider_id')
                     ->get(['products.id', 'category_id','categories.name', 'provider_id', 'providers.name', 'quota', 'unit']);
         return view('product-items.create', compact(['model','product']));
     }

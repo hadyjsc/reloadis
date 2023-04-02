@@ -29,16 +29,16 @@
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('type_id')
+                                    @error('product_id')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <strong>Nomor Ser:</strong>
+                                    <strong>Nomor Seri:</strong>
                                     <input type="text" name="serial_number" class="form-control" placeholder="Nomor Seri">
-                                    @error('name')
+                                    @error('serial_number')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror
                                 </div>
