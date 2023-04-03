@@ -42,8 +42,14 @@ class ProductsTable extends AbstractTableConfiguration
             }),
             Column::make('quota')->title('Kuota')->searchable(),
             Column::make('unit')->title('Satuan'),
-            Column::make('price')->title('Harga')->searchable(),
-            Column::make('fund')->title('Harga Modal'),
+            Column::make('price')->title('Harga')->format(function(Product $model) {
+                $toIDR = number_format($model->price, 0, ',', '.');
+                return 'Rp. '.$toIDR;
+            })->searchable(),
+            Column::make('fund')->title('Harga Modal')->format(function(Product $model) {
+                $toIDR = number_format($model->fund, 0, ',', '.');
+                return 'Rp. '.$toIDR;
+            }),
             Column::make('stocked')->title('Tersedia')->format(function(Product $model) {
                 if ($model->stocked) {
                     return "<span class='badge badge-success'>Tersedia</span>";

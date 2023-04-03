@@ -57,6 +57,7 @@
         $(".open-x-modal").click(function() {
             var catID = $(this).data("id");
             var catName = $(this).data("name");
+            console.log(catID, catName);
             if (catName == "transfer") {
                 $.get("{{ route('transfers.index') }}", function (res, status) {
                     if (status == 'success') {
@@ -65,6 +66,12 @@
                 })
             } else if(catName == "tarik tunai") {
                 $.get("{{ route('cash-withdrawals.index') }}", function (res, status) {
+                    if (status == 'success') {
+                        $("#modalReporting").modal('show').find('.modal-body').html(res);
+                    }
+                })
+            } else if(catName == 'topup') {
+                $.get("{{ route('topup.index') }}", function (res, status) {
                     if (status == 'success') {
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }

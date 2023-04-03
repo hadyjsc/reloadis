@@ -16,6 +16,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\CashWithdrawalController;
+use App\Http\Controllers\TopUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,8 +86,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
         Route::controller(CashWithdrawalController::class)->prefix('cash-withdrawals')->as('cash-withdrawals.')->group(function() {
             Route::get('/', 'index')->name('index');
-
             Route::post('/', 'store')->name('store');
+        });
+
+        Route::controller(TopUpController::class)->prefix('topup')->as('topup.')->group(function() {
+            Route::get('/', 'index')->name('index');
         });
 
         Route::controller(ProviderController::class)

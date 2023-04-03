@@ -97,7 +97,9 @@ class TransactionController extends Controller
             $data[] = ['id'=> $value->id, 'category_id' => $categoryID, 'name'=>$value->name, 'sold' => $value->sold, 'unsold' => $value->unsold];
         }
 
-        return view('transaction.create', compact('data'));
+        $category = Category::where('id', '=', $categoryID)->get(['id', 'name'])->first();
+
+        return view('transaction.create', compact('data', 'category'));
     }
 
     public function getProvider(Request $req)
