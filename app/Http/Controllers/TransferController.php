@@ -136,7 +136,7 @@ class TransferController extends Controller
                 'requestor' => $user->name,
             ];
 
-            return $this->sendResponse($data, 'success');
+            return $this->sendResponse($data, null, "Berhasil melaporkan penjualan.");
         } catch (Exception $e) {
             DB::rollback();
             return $this->sendError( "invalid request", ["error"=> "Tidak dapat melakukan permintaan."], 200);

@@ -91,6 +91,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
         Route::controller(TopUpController::class)->prefix('topup')->as('topup.')->group(function() {
             Route::get('/', 'index')->name('index');
+            Route::get("/items", "getItem")->name('getItem');
+
+            Route::post("/", "store")->name("store");
         });
 
         Route::controller(ProviderController::class)

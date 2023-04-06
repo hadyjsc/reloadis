@@ -10,7 +10,7 @@ class ProductItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id', 'serial_number'];
+    protected $fillable = ['product_id', 'serial_number', 'is_sold', 'sold_at', 'sold_by', 'created_by',  'created_at'];
 
     protected $hidden = ['id', 'product_id', 'serial_number', 'is_sold', 'sold_at', 'sold_by', 'created_by', 'updated_by', 'created_at', 'updated_at'];
 

@@ -112,7 +112,11 @@ class TransactionController extends Controller
             $data[] = ['id' => $value->id, 'sub_category_id' => $subCategory, 'name' => $value->name,  'logo' => $value->logo, 'color' => $value->color,];
         }
 
-        return $this->sendResponse($data, 'success');
+        if ($data) {
+            return $this->sendResponse($data);
+        }
+
+        return $this->sendError("Not Found!", "Data tidak tersedia, silahkan hubungi admin.", [], 200);
     }
 
     public function stock(Request $req)
@@ -129,8 +133,11 @@ class TransactionController extends Controller
             ->where('product_items.is_sold', '=', false)
             ->pluck('total_available_quantity');
 
-        return $this->sendResponse($getAvailable, 'success');
+        if ($getAvailable) {
+            return $this->sendResponse($getAvailable);
+        }
 
+        return $this->sendError("Not Found!", "Data tidak tersedia, silahkan hubungi admin.", [], 200);
     }
 
     public function items(Request $req)
@@ -162,7 +169,11 @@ class TransactionController extends Controller
             ];
         }
 
-        return $this->sendResponse($data, 'success');
+        if ($data) {
+            return $this->sendResponse($data);
+        }
+
+        return $this->sendError("Not Found!", "Data tidak tersedia, silahkan hubungi admin.", [], 200);
     }
 
     public function insert(Request $req, Product $model)
@@ -191,7 +202,7 @@ class TransactionController extends Controller
 
                     DB::commit();
 
-                    return $this->sendResponse(['product_id' => $req->product_id], 'success');
+                    return $this->sendResponse(['product_id' => $req->product_id]);
                 } else {
                     $model = Product::where('id', '=', $req->product_id)->where('stocked', '=', true)->first();
                     if($model) {

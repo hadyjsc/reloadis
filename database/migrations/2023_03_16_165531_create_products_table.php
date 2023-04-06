@@ -23,8 +23,8 @@ return new class extends Migration
                 $table->string('unit', 10);
                 $table->string('description', 255)->nullable();
                 $table->decimal('price', 18, 2);
-                $table->decimal('fund', 18, 2);
-                $table->timestamp('fund_date');
+                $table->decimal('fund', 18, 2)->nullable();
+                $table->timestamp('fund_date')->nullable();
                 $table->boolean('stocked')->default('0');
                 $table->timestamp('expired_at');
                 $table->boolean('is_deleted')->default('0');

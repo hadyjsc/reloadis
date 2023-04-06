@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->string('serial_number', 100);
                 $table->boolean('is_sold')->nullable();
                 $table->timestamp('sold_at')->nullable();
-                $table->integer('sold_by')->nullable();
+                $table->integer('sold_by')->nullable()->constrained('users', 'id');;
                 $table->foreignId('created_by')->constrained('users', 'id');
                 $table->foreignId('updated_by')->nullable()->constrained('users', 'id');
                 $table->timestamps();

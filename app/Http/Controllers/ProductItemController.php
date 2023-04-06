@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ProductItem;
 use App\Models\Product;
 
@@ -38,6 +39,8 @@ class ProductItemController extends Controller
 
     public function insert(Request $req)
     {
+        $user = Auth::user();
+
         $req->validate([
             'product_id' => 'required',
             'serial_number' => 'required'
@@ -45,12 +48,24 @@ class ProductItemController extends Controller
 
         $batchInsert = [];
         for ($i=0; $i < 10 ; $i++) {
-            $temp = ['product_id'=> $req->product_id, 'serial_number' => $req->serial_number."-".$i];
+            $temp = [
+                'product_id'=> $req->product_id,
+                'serial_number' => $req->serial_number."-".$i,
+                'created_at' => now(),
+                'created_by' => $user->id,
+            ];
             $batchInsert[$i] = $temp;
         }
 
         ProductItem::insert($batchInsert);
 
+        $product = Product::where([['id', '=', $req->product_id], ['stocked', '=', false]])->first();
+        if ($product) {
+            $product->stocked = true;
+            $product->updated_at = now();
+            $product->updated_by = $user->id;
+            $product->save();
+        }
         return redirect(route('product-items.create'))->with('success', 'Data berhasil disimpan.');
     }
 

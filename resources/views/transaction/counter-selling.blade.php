@@ -15,7 +15,7 @@
                     <h2 class="section-title">{{ $key }}</h2>
                     <div class="row">
                         @foreach ($item as $data)
-                            <div class="col-xl-3 col-md-6 col-sm-6">
+                            <div class="col-xl-4 col-md-6 col-sm-2">
                                 <div class="card bg-c-{{ $i }} order-card open-x-modal"
                                     data-id="{{ $data['id'] }}"
                                     data-target="{{ $data['id'] }}"
@@ -71,7 +71,9 @@
                     }
                 })
             } else if(catName == 'topup') {
-                $.get("{{ route('topup.index') }}", function (res, status) {
+                var url = "{{ route('topup.index', ['category-id' => 'catID']) }}";
+                url = url.replace('catID', catID);
+                $.get(url, function (res, status) {
                     if (status == 'success') {
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }
