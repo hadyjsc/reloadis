@@ -96,6 +96,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::post("/", "store")->name("store");
         });
 
+        Route::controller(BillController::class)->prefix('bill')->as('bill.')->group(function() {
+            Route::get('/', 'index')->name('index');
+            Route::get('items', 'getItem')->name('getItem');
+
+            Route::post('/', 'store')->name('store');
+        });
+
         Route::controller(ProviderController::class)
             ->prefix('providers')
             ->as('providers.')

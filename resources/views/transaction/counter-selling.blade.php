@@ -63,12 +63,16 @@
                     if (status == 'success') {
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }
+                }).fail(function(xhr) {
+                    fail(xhr)
                 })
             } else if(catName == "tarik tunai") {
                 $.get("{{ route('cash-withdrawals.index') }}", function (res, status) {
                     if (status == 'success') {
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }
+                }).fail(function(xhr) {
+                    fail(xhr)
                 })
             } else if(catName == 'topup') {
                 var url = "{{ route('topup.index', ['category-id' => 'catID']) }}";
@@ -77,6 +81,20 @@
                     if (status == 'success') {
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }
+                }).fail(function(xhr) {
+                    fail(xhr)
+                })
+            } else if(catName == 'bill') {
+                var url = "{{ route('bill.index', ['category-id' => 'catID']) }}";
+                url = url.replace('catID', catID);
+
+                $.get(url, function (res, status) {
+                    if (status == 'success') {
+                        $("#modalReporting").modal('show').find('.modal-body').html(res);
+                    }
+
+                }).fail(function(xhr) {
+                    fail(xhr)
                 })
             } else {
                 var url = "{{ route('transactions.getSubCategory', ['category-id' => 'catID']) }}"
@@ -86,9 +104,19 @@
                     if (status == 'success') {
                         $("#modalReporting").modal('show').find('.modal-body').html(res);
                     }
+                }).fail(function(xhr) {
+                    fail(xhr)
                 })
             }
         })
+
+        function fail(params) {
+            iziToast.error({
+                title: params.statusText,
+                message: params.responseJSON.message,
+                position: 'topRight'
+            });
+        }
     </script>
     @endsection
 @endsection
