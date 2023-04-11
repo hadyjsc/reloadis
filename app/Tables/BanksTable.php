@@ -6,8 +6,9 @@ use App\Models\Bank;
 use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
 use Okipa\LaravelTable\Column;
 use Okipa\LaravelTable\Formatters\DateFormatter;
-use Okipa\LaravelTable\RowActions\DestroyRowAction;
-use Okipa\LaravelTable\RowActions\EditRowAction;
+use App\Tables\RowActions\EditRowAction;
+use App\Tables\RowActions\ShowRowAction;
+use App\Tables\RowActions\DestroyRowAction;
 use Okipa\LaravelTable\Table;
 
 class BanksTable extends AbstractTableConfiguration

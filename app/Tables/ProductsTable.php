@@ -8,10 +8,11 @@ use App\Models\Provider;
 use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
 use Okipa\LaravelTable\Column;
 use Okipa\LaravelTable\Formatters\DateFormatter;
-use Okipa\LaravelTable\RowActions\DestroyRowAction;
-use Okipa\LaravelTable\RowActions\EditRowAction;
 use Okipa\LaravelTable\Filters\RelationshipFilter;
 use Okipa\LaravelTable\Table;
+use App\Tables\RowActions\EditRowAction;
+use App\Tables\RowActions\ShowRowAction;
+use App\Tables\RowActions\DestroyRowAction;
 
 class ProductsTable extends AbstractTableConfiguration
 {
@@ -23,6 +24,7 @@ class ProductsTable extends AbstractTableConfiguration
                 new RelationshipFilter('Provider', 'type', Provider::pluck('name', 'id')->toArray(), false),
             ])
             ->rowActions(fn(Product $product) => [
+                new ShowRowAction(route('products.show', $product)),
                 new EditRowAction(route('products.edit', $product)),
                 new DestroyRowAction(),
             ]);
