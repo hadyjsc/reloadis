@@ -52,6 +52,14 @@ class ScheduleController extends Controller
         ]);
 
         try {
+            $check = Schedule::where('user_id', '=', $request->user_id)
+                ->where('start_time', '>=', $request->start_time)
+                ->where('end_time', '>=', $request->end_time)->exists();
+
+            if ($check) {
+                return redirect(route('schedules.create'))->with('failed', 'Jadwal telah tersedia pada user.');
+            }
+
             Schedule::create([
                 'user_id' => $request->user_id,
                 'branch_id' => $request->branch_id,
@@ -86,7 +94,10 @@ class ScheduleController extends Controller
      */
     public function edit(Request $req)
     {
-        return view('schedules.edit');
+        $model = Schedule::find($req->id);
+        $users = User::get();
+        $branches = Branch::get();
+        return view('schedules.edit', compact(['model', 'users', 'branches']));
     }
 
     /**
@@ -98,7 +109,22 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, Schedule $schedule)
     {
-        return null;
+        $user = Auth::user();
+
+        $request->validate([
+            'branch_id' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required'
+        ]);
+
+        $schedule = Schedule::find($request->id);
+        $schedule->branch_id = $request->branch_id;
+        $schedule->start_time = $request->start_time;
+        $schedule->end_time = $request->end_time;
+        $schedule->updated_at = now();
+        $schedule->save();
+
+        return redirect(route('schedules.edit', $request->id))->with('success', 'Data berhasil diubah.');
     }
 
     /**

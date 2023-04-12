@@ -251,11 +251,11 @@ Breadcrumbs::for('schedules.create',function ($breadcrumbs) {
 Breadcrumbs::for('schedules.edit',function ($breadcrumbs, $model) {
     $breadcrumbs->parent('schedules.index');
     $breadcrumbs->push('Edit', route('schedules.edit', $model->id));
-    $breadcrumbs->push($model->name, route('schedules.edit', $model->id));
+    $breadcrumbs->push($model->user->name, route('schedules.edit', $model->id));
 });
 
 Breadcrumbs::for('schedules.show',function ($breadcrumbs, $model) {
     $breadcrumbs->parent('schedules.index');
     $breadcrumbs->push('Show', route('schedules.show', $model->id));
-    $breadcrumbs->push($model->name, route('schedules.show', $model->id));
+    $breadcrumbs->push($model->user->name, route('schedules.show', $model->id));
 });
