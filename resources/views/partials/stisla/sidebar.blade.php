@@ -36,9 +36,11 @@
 
             <li class="menu-header">Resources</li>
 
-            <li class="{{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> <span>Cabang</span></a></li>
+            <li class="{{ (request()->is('branches') || request()->is('branches/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('branches.index')}}"><i class="fas fa-building"></i> <span>Cabang</span></a></li>
 
             <li class="{{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('users.index')}}"><i class="fas fa-users"></i> <span>Karyawan</span></a></li>
+
+            <li class="{{ (request()->is('schedules') || request()->is('schedules/*')) ? 'active' : '' }}"><a class="nav-link" href="{{route('schedules.index')}}"><i class="fas fa-user-clock"></i> <span>Jadwal</span></a></li>
 
             <li class="menu-header">Admin Panel</li>
 

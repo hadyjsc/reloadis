@@ -217,3 +217,45 @@ Breadcrumbs::for('roles.show',function ($breadcrumbs, $model) {
     $breadcrumbs->push('Show', route('roles.show', $model->id));
     $breadcrumbs->push($model->name, route('roles.show', $model->id));
 });
+
+Breadcrumbs::for('branches.index',function ($breadcrumbs) {
+    $breadcrumbs->push('Branch', route('branches.index'));
+});
+
+Breadcrumbs::for('branches.create',function ($breadcrumbs) {
+    $breadcrumbs->parent('branches.index');
+    $breadcrumbs->push('Create', route('branches.create'));
+});
+
+Breadcrumbs::for('branches.edit',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('branches.index');
+    $breadcrumbs->push('Edit', route('branches.edit', $model->id));
+    $breadcrumbs->push($model->name, route('branches.edit', $model->id));
+});
+
+Breadcrumbs::for('branches.show',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('branches.index');
+    $breadcrumbs->push('Show', route('branches.show', $model->id));
+    $breadcrumbs->push($model->name, route('branches.show', $model->id));
+});
+
+Breadcrumbs::for('schedules.index',function ($breadcrumbs) {
+    $breadcrumbs->push('Schedule', route('schedules.index'));
+});
+
+Breadcrumbs::for('schedules.create',function ($breadcrumbs) {
+    $breadcrumbs->parent('schedules.index');
+    $breadcrumbs->push('Create', route('schedules.create'));
+});
+
+Breadcrumbs::for('schedules.edit',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('schedules.index');
+    $breadcrumbs->push('Edit', route('schedules.edit', $model->id));
+    $breadcrumbs->push($model->name, route('schedules.edit', $model->id));
+});
+
+Breadcrumbs::for('schedules.show',function ($breadcrumbs, $model) {
+    $breadcrumbs->parent('schedules.index');
+    $breadcrumbs->push('Show', route('schedules.show', $model->id));
+    $breadcrumbs->push($model->name, route('schedules.show', $model->id));
+});

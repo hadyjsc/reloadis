@@ -17,6 +17,8 @@ use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\CashWithdrawalController;
 use App\Http\Controllers\TopUpController;
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +39,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::post("/", "perform")->name('perform');
         });
     });
-
 
     Route::group(['middleware' => ['auth', 'permission']], function() {
         Route::controller(DashboardController::class)->prefix('')->as('.')->group(function(){
@@ -206,6 +207,26 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::post("/", "insert")->name('insert');
             Route::put("/{id}/update", "update")->name('update');
             Route::delete("/", "delete")->name('delete');
+        });
+
+        Route::controller(BranchController::class)->prefix('branches')->as('branches.')->group(function() {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}/show', 'show')->name('show');
+            Route::get('/create', 'create')->name('create');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::post("/", "store")->name('store');
+            Route::put("/{id}/update", "update")->name('update');
+            Route::delete("/", "destroy")->name('destroy');
+        });
+
+        Route::controller(ScheduleController::class)->prefix('schedules')->as('schedules.')->group(function() {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}/show', 'show')->name('show');
+            Route::get('/create', 'create')->name('create');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::post("/", "store")->name('store');
+            Route::put("/{id}/update", "update")->name('update');
+            Route::delete("/", "destroy")->name('destroy');
         });
     });
 });
