@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{{asset('assets/vendor/owl.carousel/dist/assets/owl.carousel.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/owl.carousel/dist/assets/owl.theme.default.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/vendor/izitoast/dist/css/iziToast.min.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-daterangepicker/daterangepicker.css')}}">
 
 <!-- Template CSS -->
 <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">

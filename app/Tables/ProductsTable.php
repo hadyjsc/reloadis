@@ -9,10 +9,15 @@ use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
 use Okipa\LaravelTable\Column;
 use Okipa\LaravelTable\Formatters\DateFormatter;
 use Okipa\LaravelTable\Filters\RelationshipFilter;
+// use Okipa\LaravelTable\Filters\DateFilter;
 use Okipa\LaravelTable\Table;
 use App\Tables\RowActions\EditRowAction;
 use App\Tables\RowActions\ShowRowAction;
 use App\Tables\RowActions\DestroyRowAction;
+use Okipa\LaravelTable\Filters\ValueFilter;
+// use App\Tables\Filters\DateTimeFilter;
+use Okipa\LaravelTable\BulkActions\ActivateBulkAction;
+use Carbon\Carbon;
 
 class ProductsTable extends AbstractTableConfiguration
 {
@@ -20,8 +25,10 @@ class ProductsTable extends AbstractTableConfiguration
     {
         return Table::make()->model(Product::class)
             ->filters([
-                new RelationshipFilter('Category', 'type', Category::pluck('name', 'id')->toArray(), false),
-                new RelationshipFilter('Provider', 'type', Provider::pluck('name', 'id')->toArray(), false),
+                // new DateTimeFilter(),
+                // new DateFilter('Date', 'created_at'),
+                new RelationshipFilter('Category', 'category_id', Category::pluck('name', 'id')->toArray(), false),
+                new RelationshipFilter('Provider', 'provider_id', Provider::pluck('name', 'id')->toArray(), false),
             ])
             ->rowActions(fn(Product $product) => [
                 new ShowRowAction(route('products.show', $product)),
@@ -59,6 +66,9 @@ class ProductsTable extends AbstractTableConfiguration
                 return "<span class='badge badge-danger'>Habis</span>";
 
             }),
+            // Column::make('created_at')->title('Date')->format(function (Product $model) {
+                // return Carbon::createFromFormat('Y-m-d H:m:s',$model->created_at)->diffForHumans();
+            // }),
         ];
     }
 

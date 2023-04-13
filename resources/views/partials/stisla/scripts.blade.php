@@ -13,6 +13,7 @@
 <script src="{{asset('assets/vendor/summernote/dist/summernote-bs4.js')}}"></script>
 <script src="{{asset('assets/vendor/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
 <script src="{{asset('assets/vendor/izitoast/dist/js/iziToast.min.js')}}"></script>
+<script src="{{asset('assets/vendor/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 
 <!-- Template JS File -->
 <script src="{{asset('assets/js/scripts.js')}}"></script>
