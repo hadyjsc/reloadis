@@ -4,15 +4,15 @@ namespace App\Tables;
 
 use App\Models\SubCategory;
 use App\Models\Category;
-use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
-use Okipa\LaravelTable\Column;
-use Okipa\LaravelTable\Formatters\DateFormatter;
+use JscDev\LaravelTable\Abstracts\AbstractTableConfiguration;
+use JscDev\LaravelTable\Column;
+use JscDev\LaravelTable\Formatters\DateFormatter;
 use App\Tables\RowActions\EditRowAction;
 use App\Tables\RowActions\ShowRowAction;
 use App\Tables\RowActions\DestroyRowAction;
-use Okipa\LaravelTable\Filters\RelationshipFilter;
-use Okipa\LaravelTable\Table;
-use Okipa\LaravelTable\Result;
+use JscDev\LaravelTable\Filters\RelationshipFilter;
+use JscDev\LaravelTable\Table;
+use JscDev\LaravelTable\Result;
 use Illuminate\Database\Query\Builder;
 
 class SubCategoriesTable extends AbstractTableConfiguration

@@ -3,14 +3,14 @@
 namespace App\Tables;
 
 use App\Models\Product;
-use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
-use Okipa\LaravelTable\Column;
-use Okipa\LaravelTable\Formatters\DateFormatter;
+use JscDev\LaravelTable\Abstracts\AbstractTableConfiguration;
+use JscDev\LaravelTable\Column;
+use JscDev\LaravelTable\Formatters\DateFormatter;
 use App\Tables\RowActions\EditRowAction;
 use App\Tables\RowActions\ShowRowAction;
 use App\Tables\RowActions\DestroyRowAction;
-use Okipa\LaravelTable\Table;
-use Okipa\LaravelTable\Result;
+use JscDev\LaravelTable\Table;
+use JscDev\LaravelTable\Result;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as BuilderResult;

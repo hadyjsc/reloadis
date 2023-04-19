@@ -4,7 +4,7 @@ namespace App\Tables\RowActions;
 
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Okipa\LaravelTable\Abstracts\AbstractRowAction;
+use JscDev\LaravelTable\Abstracts\AbstractRowAction;
 
 class ShowRowAction extends AbstractRowAction
 {

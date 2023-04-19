@@ -3,13 +3,13 @@
 namespace App\Tables;
 
 use Spatie\Permission\Models\Role;
-use Okipa\LaravelTable\Abstracts\AbstractTableConfiguration;
-use Okipa\LaravelTable\Column;
-use Okipa\LaravelTable\Formatters\DateFormatter;
+use JscDev\LaravelTable\Abstracts\AbstractTableConfiguration;
+use JscDev\LaravelTable\Column;
+use JscDev\LaravelTable\Formatters\DateFormatter;
 use App\Tables\RowActions\EditRowAction;
 use App\Tables\RowActions\ShowRowAction;
 use App\Tables\RowActions\DestroyRowAction;
-use Okipa\LaravelTable\Table;
+use JscDev\LaravelTable\Table;
 
 class RolesTable extends AbstractTableConfiguration
 {

@@ -23,5 +23,26 @@
 
 <!-- Page Specific JS File -->
 {{-- <script src="{{asset('assets/js/page/index.js')}}"></script> --}}
-
+<script></script>
 <livewire:scripts />
+<script>
+    Livewire.on('datepicker:script', function() {
+        $('.daterange-cus').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+            autoUpdateInput: false,
+        });
+
+        $('.daterange-cus').on('apply.daterangepicker', function(ev, picker) {
+            var val = picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD');
+            Livewire.emit('datepicker:script:set', 'date_time_filter', val)
+            $(this).val(val);
+        });
+
+        $('.daterange-cus').on('cancel.daterangepicker', function(ev, picker) {
+            Livewire.emit('datepicker:script:set', 'date_time_filter', '')
+            $(this).val('');
+        });
+    });
+</script>
