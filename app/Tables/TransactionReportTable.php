@@ -14,12 +14,16 @@ use JscDev\LaravelTable\Result;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as BuilderResult;
+use App\Tables\Filters\DatePickerFilter;
 
 class TransactionReportTable extends AbstractTableConfiguration
 {
     protected function table(): Table
     {
         return Table::make()
+            ->datePickers([
+                new DatePickerFilter('Filter Tanggal', 'product_items.sold_at'),
+            ])
             ->model(Product::class)
             ->query(function(Builder $query) {
                 return $query->select(DB::raw('products.id, products.provider_id, providers.name, providers.color, products.price, products.fund,

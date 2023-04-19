@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Type;
 use App\Models\SubCategory;
 use App\Models\Provider;
 use App\Models\Product;
@@ -13,37 +14,43 @@ use App\Http\Resources\SubCategoryResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
-    public function index()
+    public function index(Request $req)
     {
-        // $query = DB::table('products')
-        //     ->selectRaw('products.id, products.provider_id, products.price, products.fund,
-        //         COUNT(product_items.id) AS stock,
-        //         COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS sold,
-        //         COUNT(product_items.id) - COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS last_stock,
-        //         (products.price - products.fund) * COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS profit'
-        //     )->join('product_items', 'products.id', '=', 'product_items.product_id')
-        //     ->groupBy(['products.id', 'products.provider_id', 'products.price', 'products.fund'])
-        //     ->get();
+        $query = DB::table('products')
+        ->selectRaw('products.id, products.provider_id,providers.name, providers.color, products.price, products.fund,
+            (products.fund * COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END)) as total_fund,
+            COUNT(product_items.id) AS stock,
+            COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS sold,
+            COUNT(product_items.id) - COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS last_stock,
+            (products.price - products.fund) * COUNT(CASE WHEN product_items.is_sold = true THEN product_items.id END) AS profit')
+        ->join('product_items', 'products.id', '=', 'product_items.product_id')
+        ->leftJoin('providers', 'products.provider_id', '=', 'providers.id');
 
-        // $report = [];
-        // foreach ($query as $key => $value) {
-        //     $report[] = [
-        //         'id' => $value->id,
-        //         'provider_id' => $value->provider_id,
-        //         'price' => $value->price,
-        //         'fund' => $value->fund,
-        //         'stock' => $value->stock,
-        //         'last_stock' => $value->last_stock,
-        //         'sold' => $value->sold,
-        //         'profit' => $value->profit,
-        //     ];
-        // }
+        $soldAt = !is_null($req['transaction-date']) ? $req['transaction-date'] : Carbon::now()->toDateString();
+        $query->whereDate('product_items.sold_at', '=', $soldAt);
 
-        // return view('transaction.index', compact('report'));
-        return view('transaction.index');
+        $typeID = !is_null($req['type-id']) ? $req['type-id'] : null;
+        if ($typeID) {
+            $query->where('categories.type_id', '=', $typeID)->join('categories', 'products.category_id', '=', 'categories.id');
+        }
+
+        $categoryID = !is_null($req['category-id']) ? $req['category-id'] : null;
+        if ($categoryID) {
+            $query->where('products.category_id', '=', $categoryID);
+        }
+
+        $data = $query->groupBy(['products.id', 'products.provider_id', 'products.price', 'products.fund'])
+        ->orderBy('products.provider_id')
+        ->get();
+
+        $categories = Category::get();
+        $types = Type::get();
+
+        return view('transaction.index',  compact(['categories', 'types', 'soldAt', 'typeID', 'categoryID', 'data']));
     }
 
     public function selling()

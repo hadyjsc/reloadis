@@ -23,7 +23,9 @@
 
 <!-- Page Specific JS File -->
 {{-- <script src="{{asset('assets/js/page/index.js')}}"></script> --}}
-<script></script>
+<script>
+    $('[data-toggle="tooltip"]').tooltip()
+</script>
 <livewire:scripts />
 <script>
     Livewire.on('datepicker:script', function() {
