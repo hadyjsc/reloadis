@@ -51,8 +51,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                     <button class="btn btn-info float-right"><i class="fa fa-filter"></i> Terapkan Filter</button>
-                                    <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-file-excel"></i> Cetak laporan ke Excel</a>
-                                    <a href="#" class="btn btn-icon icon-left btn-success"><i class="fas fa-file-pdf"></i> Cetak laporan ke PDF</a>
+                                    @php
+                                        $request = '?'.http_build_query(array_merge(request()->all()));
+                                    @endphp
+                                    <a href="{{ route('transactions.export', 'xlsx').$request  }}" target="_blank" class="btn btn-icon icon-left btn-success"><i class="fas fa-file-excel"></i> Cetak laporan ke Excel</a>
+                                    <a href="{{ route('transactions.export', 'pdf').$request }}" target="_blank" class="btn btn-icon icon-left btn-success"><i class="fas fa-file-pdf"></i> Cetak laporan ke PDF</a>
                                 </div>
                             </div>
                         </form>
@@ -60,52 +63,64 @@
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
                                 @if (count($data) > 0)
                                 @php
+                                    $totalStock = 0;
+                                    $totalLastStock = 0;
+                                    $totalItem = 0;
                                     $totalSold = 0;
+                                    $totalPrice = 0;
+                                    $totalFundingPrice = 0;
                                     $totalFund = 0;
                                     $totalProfit = 0;
+                                    $i = 1;
                                 @endphp
-                                    <table class="table table-bordered">
+                                    <table class="table table-striped">
                                         <thead>
+                                            <th>#</th>
                                             <th>Provider</th>
-                                            <th>Stock</th>
-                                            <th>Sisa Stock</th>
-                                            <th>Terjual</th>
-                                            <th>Harga</th>
-                                            <th>Modal</th>
-                                            <th>Total Modal <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Dengan ketentuan: Modal x Terjual"></i></th>
-                                            <th>Keuntungan <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Dengan ketentuan: (Harga - Modal) x Terjual"></i></th>
+                                            <th class="text-center">Stock</th>
+                                            <th class="text-center">Sisa Stock</th>
+                                            <th class="text-center">Terjual</th>
+                                            <th class="text-center">Harga</th>
+                                            <th class="text-center">Modal</th>
+                                            <th class="text-center">Total Modal <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Dengan ketentuan: Modal x Terjual"></i></th>
+                                            <th class="text-center">Keuntungan <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Dengan ketentuan: (Harga - Modal) x Terjual"></i></th>
                                         </thead>
                                         <tbody>
                                             @foreach ($data as $item)
                                             <tr>
+                                                <td>{{ $i }}</td>
                                                 <td>{{ $item->name ? $item->name : '-' }}</td>
-                                                <td>{{ $item->stock }}</td>
-                                                <td>{{ $item->last_stock }}</td>
-                                                <td>{{ $item->sold }}</td>
-                                                <td>{{ $item->price ? 'Rp. '.number_format($item->price, 0, ',', '.') : 0 }}</td>
-                                                <td>{{ $item->fund ? 'Rp. '.number_format($item->fund, 0, ',', '.') : 0 }}</td>
-                                                <td>{{ $item->total_fund ? 'Rp. '.number_format($item->total_fund, 0, ',', '.') : 0 }}</td>
-                                                <td>{{ $item->profit ? 'Rp. '.number_format($item->profit, 0, ',', '.') : 0 }}</td>
+                                                <td class="text-center">{{ $item->stock }}</td>
+                                                <td  class="text-center">{{ $item->last_stock }}</td>
+                                                <td class="text-center">{{ $item->sold }}</td>
+                                                <td class="text-right">{{ $item->price ? 'Rp. '.number_format($item->price, 0, ',', '.') : 0 }}</td>
+                                                <td class="text-right">{{ $item->fund ? 'Rp. '.number_format($item->fund, 0, ',', '.') : 0 }}</td>
+                                                <td class="text-right">{{ $item->total_fund ? 'Rp. '.number_format($item->total_fund, 0, ',', '.') : 0 }}</td>
+                                                <td class="text-right">{{ $item->profit ? 'Rp. '.number_format($item->profit, 0, ',', '.') : 0 }}</td>
                                             </tr>
                                             @php
+                                                $totalStock += $item->stock;
+                                                $totalLastStock += $item->last_stock;
+                                                $totalItem += $item->sold;
                                                 $totalSold += $item->price * $item->sold;
+                                                $totalPrice += $item->price;
+                                                $totalFundingPrice += $item->fund;
                                                 $totalFund += $item->total_fund;
                                                 $totalProfit += $item->profit;
+                                                $i++;
                                             @endphp
                                             @endforeach
                                         </tbody>
                                         <tfoot>
-                                            <tr>
-                                                <td colspan="7">Total Terjual</td>
-                                                <td>{{ 'Rp. '.number_format($totalSold, 0, ',', '.')  }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="7">Total Modal</td>
-                                                <td>{{ 'Rp. '.number_format($totalFund , 0, ',', '.') }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="7">Total profit yang diperoleh</td>
-                                                <td>{{ 'Rp. '.number_format( $totalProfit , 0, ',', '.')}}</td>
+                                            <tr class="bg-info text-white">
+                                                <td colspan="2">Total</td>
+                                                <td class="text-center">{{ $totalStock  }}</td>
+                                                <td class="text-center">{{ $totalLastStock  }}</td>
+                                                <td class="text-center">{{ $totalItem  }}</td>
+                                                <td class="text-right">{{ 'Rp. '.number_format($totalPrice , 0, ',', '.') }}</td>
+                                                <td class="text-right">{{ 'Rp. '.number_format($totalFundingPrice , 0, ',', '.') }}</td>
+                                                <td class="text-right">{{ 'Rp. '.number_format($totalFund , 0, ',', '.') }}</td>
+                                                <td class="text-right">{{ 'Rp. '.number_format( $totalProfit , 0, ',', '.')}}</td>
                                             </tr>
                                         </tfoot>
                                     </table>

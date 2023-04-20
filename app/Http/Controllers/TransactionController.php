@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Exports\TransactionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionController extends Controller
 {
@@ -51,6 +53,22 @@ class TransactionController extends Controller
         $types = Type::get();
 
         return view('transaction.index',  compact(['categories', 'types', 'soldAt', 'typeID', 'categoryID', 'data']));
+    }
+
+    public function export(Request $req)
+    {
+        $fileName = 'transaction-'.Carbon::now()->toDateTimeString();
+        if ($req['type'] == 'xlsx') {
+            $soldAt = !is_null($req['transaction-date']) ? $req['transaction-date'] : Carbon::now()->toDateString();
+            $typeID = !is_null($req['type-id']) ? $req['type-id'] : null;
+            $categoryID = !is_null($req['category-id']) ? $req['category-id'] : null;
+
+            return Excel::download(new TransactionExport($soldAt, $typeID, $categoryID), $fileName.'.xlsx');
+        }
+
+        if ($req['type'] == 'pdf') {
+            return Excel::download(new TransactionExport, $fileName.'.xlsx');
+        }
     }
 
     public function selling()

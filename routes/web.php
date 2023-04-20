@@ -72,6 +72,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::get("/provider", "getProvider")->name("getProvider");
             Route::get("/stock", "stock")->name("stock");
             Route::get("/items", "items")->name("items");
+            Route::get("/export/{type}", "export")->name("export");
 
             Route::post("/insert", "insert")->name("insert");
         });
