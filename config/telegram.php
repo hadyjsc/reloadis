@@ -32,9 +32,9 @@ return [
     */
     'bots' => [
         'mybot' => [
-            'token' => env('TELEGRAM_BOT_TOKEN', '5918332246:AAGOA2b9BeOc1yvgIXkwaRNIth4tc5ltT1Q'),
+            'token' => env('TELEGRAM_BOT_TOKEN'),
             // 'certificate_path' => env('TELEGRAM_CERTIFICATE_PATH', 'YOUR-CERTIFICATE-PATH'),
-            'webhook_url' => env('TELEGRAM_WEBHOOK_URL', 'https://e2ff-2001-448a-1083-fe0c-d87a-d5be-1b21-a625.ngrok-free.app/webhook/telegram'),
+            'webhook_url' => env('TELEGRAM_WEBHOOK_URL'),
             'commands' => [
                 //Acme\Project\Commands\MyTelegramBot\BotCommand::class
             ],
