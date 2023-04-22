@@ -19,6 +19,8 @@ use App\Http\Controllers\CashWithdrawalController;
 use App\Http\Controllers\TopUpController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\WebHookController;
+use App\Http\Controllers\TelegramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +40,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::get("/", "index")->name('index');
             Route::post("/", "perform")->name('perform');
         });
+
+        Route::controller(WebHookController::class)->prefix('webhook')->as('webhook.')->group(function() {
+            Route::post("/telegram", "telegram")->name('telegram');
+        });
     });
+
 
     Route::group(['middleware' => ['auth', 'permission']], function() {
         Route::controller(DashboardController::class)->prefix('')->as('.')->group(function(){
@@ -228,6 +235,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
             Route::post("/", "store")->name('store');
             Route::put("/{id}/update", "update")->name('update');
             Route::delete("/", "destroy")->name('destroy');
+        });
+
+        Route::controller(TelegramController::class)->prefix('telegram-notif')->as('telegram-notif.')->group(function(){
+            Route::get('/send', 'send')->name('send');
+            Route::post('/request', 'request')->name('request');
         });
     });
 });

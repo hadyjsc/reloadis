@@ -67,6 +67,16 @@ class User extends Authenticatable
      */
     public function role(): BelongsTo
     {
-        return $this->belongsTo(Role::class)->withDefault();;
+        return $this->belongsTo(Role::class)->withDefault();
+    }
+
+    /**
+     * Get the branch that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class)->withDefault();
     }
 }

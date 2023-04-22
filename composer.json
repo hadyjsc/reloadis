@@ -9,6 +9,7 @@
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
         "guzzlehttp/guzzle": "^7.2",
         "hadyjsc/laravel-table-dev": "dev-master",
+        "irazasyed/telegram-bot-sdk": "^3.11",
         "laravel/fortify": "^1.16",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",

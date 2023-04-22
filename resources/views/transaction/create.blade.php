@@ -151,7 +151,7 @@
                                     isItem = true
                                 } else {
                                     message = `Terdapat <b>${stocked}</b> lagi di dalam stok, harap lakukan penambahan jumlah stok. Jika perlu bantuan segera hubungi via whatsaap dengan menekan tombol hijau di bawah.
-                                    <br><a class="btn btn-success float-right mt-2" target="_blank" href="https://wa.me/+6285271404170?text=Stok+%2AKartu+Perdana+Prabayar+Provider+Telkomsel%2A+di+Konter+%2AABC%2A+ada+%2A0%2A.+Tolong+ditambah+lagi+ya+agar+proses+transaksi+penjualan+terus+berjalan."><i class="fab fa-whatsapp"></i> Kirim Pesan</a>`
+                                    <br><button type="button" class="btn btn-success float-right mt-2" data-category="${categoryID}" data-subcategory="${subCategoryID}" data-provider="${providerID}" onclick="sendNotif(this)"><i class="fab fa-telegram"></i> Kirim Pesan</button>`
                                     $("#create").attr('disabled','disabled')
                                 }
                                 $(".alert-light").show();
@@ -163,7 +163,6 @@
                                     getItem = getItem.replace('subCategoryID', subCategoryID);
                                     getItem = getItem.replace('providerID', providerID);
                                     getItem = getItem.replaceAll('&amp;', '&')
-
 
                                     $.get(getItem, function(res, status) {
                                         if (status == 'success') {
@@ -205,7 +204,6 @@
                                                     // Pass clicked link element to another function
                                                     var productID = $this.data('id')
                                                     $("#product_id").val(productID)
-                                                    console.log("productID",productID);
                                                 })
                                             }
                                         }
@@ -218,4 +216,39 @@
             }
         })
     })
+
+    function sendNotif(e) {
+        $(e).attr("disabled", "disabled")
+        $(e).html('<i class="fas fa-spinner fa-spin"></i> Mengirim pesan...');
+        var categoryId = $(e).data('category')
+        var subCategoryId = $(e).data('subcategory')
+        var providerId = $(e).data('provider')
+        var productId = $("#product_id").val()
+
+        $.post(`{{ route('telegram-notif.request') }}`, {
+            'product_id' : productId,
+            'category_id' : categoryId,
+            'sub_category_id': subCategoryId,
+            'provider_id': providerId,
+            "_token": "{{ csrf_token() }}",
+        }).done(function(res) {
+            iziToast.success({
+                title: res.messageTitle,
+                message: res.message,
+                position: 'topRight'
+            });
+            $(e).removeAttr("disabled")
+            $(e).html('<i class="fab fa-telegram"></i> Kirim Pesan');
+        }).fail(function(xhr) {
+            fail(xhr)
+        })
+    }
+
+    function fail(params) {
+        iziToast.error({
+            title: params.statusText,
+            message: params.responseJSON.message,
+            position: 'topRight'
+        });
+    }
 </script>
