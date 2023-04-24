@@ -1,4 +1,4 @@
-![Overview](https://github.com/hadyjsc/reloadis/blob/main/public/overview.png?raw=true)
+![Overview](https://raw.githubusercontent.com/hadyjsc/reloadis/main/public/overview.png?raw=true)
 
 Reloadis is a simple project to learn laravel framework, i just make the project for fun. Actualy this project is'nt complete yet, lots of lack of features. So, i hope if you the clonner user, you can contribute in this project.
 
