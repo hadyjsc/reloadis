@@ -73,6 +73,7 @@
                                     $totalProfit = 0;
                                     $i = 1;
                                 @endphp
+                                <div class="table-responsive">
                                     <table class="table table-striped">
                                         <thead>
                                             <th>#</th>
@@ -124,6 +125,7 @@
                                             </tr>
                                         </tfoot>
                                     </table>
+                                </div>
                                 @else
                                     <div class="alert alert-light text-center mt-3">Data transaksi tidak ditemukan</div>
                                 @endif

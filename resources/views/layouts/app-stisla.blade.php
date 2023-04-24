@@ -23,6 +23,7 @@
     </div>
     @include('partials.stisla.scripts')
     @yield("custom-javascript")
+    @yield("chart-javascript")
 </body>
 
 </html>
